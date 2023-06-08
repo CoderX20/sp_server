@@ -14,6 +14,17 @@ class MessageNew:
         self.name=name
 
 
+class AttractionComment:
+    def __init__(self, comment: str,time: str, trump_count: int, account_id: int, identify: str, name: str, attraction_id: int):
+        self.comment=comment
+        self.time=time,
+        self.trump_count=trump_count
+        self.account_id=account_id
+        self.identify=identify
+        self.name=name,
+        self.attraction_id=attraction_id
+
+
 class MySQLClient:
     def __init__(self,host:str,port:int,username:str,password:str,database:str):
         self.host = host
@@ -283,6 +294,7 @@ class MySQLClient:
             elif identify=="admin":
                 del_str="""delete from messages where adminID=%s"""%userid
             cur.execute(del_str)
+            self.remove_attraction_comment_account(userid,identify)
             return data_ret
         else:
             data_ret['state']=-1
@@ -517,4 +529,99 @@ class MySQLClient:
         if len(select_data)>0:
             data_ret['score']=select_data[0][0]
         return data_ret
+
+    def get_attraction_comments(self,attraction_id:int) -> dict:
+        """
+        获取旅游景点的评论
+        :param attraction_id:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select id,comment,account_id,identify,name,trump_count,time 
+        from attraction_comments 
+        where attraction_id=%s 
+        order by time desc,trump_count desc ;"""%attraction_id
+        data_ret={'state':1,'comments':[]}
+        cur.execute(get_str)
+        comments=cur.fetchall()
+        for row in comments:
+            data_ret['comments'].append({
+                "id":row[0],
+                'comment':row[1],
+                'account_id':row[2],
+                'identify':row[3],
+                'name':row[4],
+                'trump_count':row[5],
+                'time':row[6]
+            })
+        return data_ret
+
+    def add_new_attraction_comment(self,comment:AttractionComment) -> dict:
+        """
+        添加新的景区评论
+        :param comment:
+        :return:
+        """
+        print(comment.comment,comment.time,comment.account_id,comment.name,comment.attraction_id)
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        add_str="""insert into attraction_comments ( comment, attraction_id, account_id, identify, name, trump_count, time, emotion) 
+        values ('%s',%s,%s,'%s','%s',0,'%s',%s)"""%\
+                (comment.comment,
+                 comment.attraction_id,
+                 comment.account_id,
+                 comment.identify,
+                 comment.name,
+                 comment.time,
+                 self.NN_mode.predict_single(comment.comment)[0])
+        print(add_str)
+        data_ret={'state':1}
+        cur.execute(add_str)
+        return data_ret
+
+    def alter_attraction_comment(self,comment_id:int,comment_new:str) -> dict:
+        """
+        修改景区评论
+        :param comment_id:
+        :param comment_new:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        alter_str="""update attraction_comments set comment='%s' where id=%s"""%(comment_new,comment_id)
+        data_ret = {'state': 1}
+        if cur.execute(alter_str)==1:
+            data_ret['state']=1
+        else:
+            data_ret['state']=-1
+        return data_ret
+
+    def remove_attraction_comment_id(self,comment_id:int) -> dict:
+        """
+        通过id移除景点评论
+        :param comment_id:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        pop_str="""delete from attraction_comments where id=%s"""%comment_id
+        data_ret={'state': 1}
+        cur.execute(pop_str)
+        return data_ret
+
+    def remove_attraction_comment_account(self,account_id:int,identify:str) -> dict:
+        """
+        移除某个用户的所有景点留言
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        pop_str="""delete from attraction_comments where account_id=%s and identify='%s'"""%(account_id,identify)
+        data_ret = {'state': 1}
+        cur.execute(pop_str)
+        return data_ret
+
 

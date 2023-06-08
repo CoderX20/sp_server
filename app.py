@@ -1,6 +1,6 @@
 from flask import Flask,jsonify,make_response,request
 from flask_cors import CORS
-from dbIO import MySQLClient,MessageNew
+from dbIO import MySQLClient,MessageNew,AttractionComment
 
 app = Flask(__name__)
 CORS(app,resources=r'/*') # 解决跨域
@@ -311,6 +311,75 @@ def get_my_attraction_score():
     identify = data.get('identify')
     attraction_id = data.get('attraction_id')
     post_res=db_set.get_user_attraction_score(account_id,identify,attraction_id)
+    return make_response(jsonify(post_res))
+
+
+@app.route('/addAttractionComment',methods=['POST'])
+def add_attraction_comment():
+    """
+    添加景点评论
+    :return:
+    """
+    data=request.get_json()
+    comment=data.get('comment')
+    time=data.get('time')
+    trump_count=data.get('trump_count')
+    account_id=data.get('account_id')
+    identify=data.get('identify')
+    name=data.get('name')
+    attraction_id=data.get('attraction_id')
+    print(comment,time,trump_count,account_id,identify,name,attraction_id)
+    post_res=db_set.add_new_attraction_comment(AttractionComment(comment=comment,time=time,trump_count=trump_count,account_id=account_id,identify=identify,name=name,attraction_id=attraction_id))
+    return make_response(jsonify(post_res))
+
+
+@app.route('/alterAttractionComment',methods=['POST'])
+def alter_attraction_comment():
+    """
+    修改景点评论
+    :return:
+    """
+    data=request.get_json()
+    comment_id=data.get('comment_id')
+    comment_new=data.get('comment_new')
+    post_res=db_set.alter_attraction_comment(comment_id,comment_new)
+    return make_response(jsonify(post_res))
+
+
+@app.route('/removeAttractionCommentID',methods=['POST'])
+def remove_attraction_comment_id():
+    """
+    通过景区评论id移除景点评论
+    :return:
+    """
+    data=request.get_json()
+    comment_id=data.get('comment_id')
+    post_res=db_set.remove_attraction_comment_id(comment_id)
+    return make_response(jsonify(post_res))
+
+
+@app.route('/removeAttractionCommentAccount',methods=['POST'])
+def remove_attraction_comment_account():
+    """
+    通过用户账号移除景点评论
+    :return:
+    """
+    data=request.get_json()
+    account_id=data.get('account_id')
+    identify=data.get('identify')
+    post_res=db_set.remove_attraction_comment_account(account_id,identify)
+    return make_response(jsonify(post_res))
+
+
+@app.route('/getAttractionComments',methods=['POST'])
+def get_attraction_comments():
+    """
+    获取某个景点下的所有评论信息
+    :return:
+    """
+    data=request.get_json()
+    attraction_id=data.get('attraction_id')
+    post_res=db_set.get_attraction_comments(attraction_id)
     return make_response(jsonify(post_res))
 
 
