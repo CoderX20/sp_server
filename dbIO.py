@@ -557,25 +557,29 @@ class MySQLClient:
             })
         return data_ret
 
-    def add_new_attraction_comment(self,comment:AttractionComment) -> dict:
+    def add_new_attraction_comment(self,comment:str,time:str,attraction_id:int,account_id,name:str,identify:str) -> dict:
         """
-        添加新的景区评论
+        添加新的经典评论
         :param comment:
+        :param time:
+        :param attraction_id:
+        :param account_id:
+        :param name:
+        :param identify:
         :return:
         """
-        print(comment.comment,comment.time,comment.account_id,comment.name,comment.attraction_id)
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
         add_str="""insert into attraction_comments ( comment, attraction_id, account_id, identify, name, trump_count, time, emotion) 
         values ('%s',%s,%s,'%s','%s',0,'%s',%s)"""%\
-                (comment.comment,
-                 comment.attraction_id,
-                 comment.account_id,
-                 comment.identify,
-                 comment.name,
-                 comment.time,
-                 self.NN_mode.predict_single(comment.comment)[0])
-        print(add_str)
+                (comment,
+                 attraction_id,
+                 account_id,
+                 identify,
+                 name,
+                 time,
+                 self.NN_mode.predict_single(comment)[0])
+        # print(add_str)
         data_ret={'state':1}
         cur.execute(add_str)
         return data_ret
@@ -624,4 +628,69 @@ class MySQLClient:
         cur.execute(pop_str)
         return data_ret
 
+    def trump_attraction_comment(self,account_id:int,identify:str,comment_id:int) -> dict:
+        """
+        对某个景点评论进行点赞操作
+        :param account_id:
+        :param identify:
+        :param comment_id:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        add_str="""insert into trump_attraction_comments (account_id, identify, comment_id) values (%s,'%s',%s)"""%\
+                (account_id,identify,comment_id)
+        data_ret = {'state': 1}
+        cur.execute(add_str)
+        # 更新景点评论点赞数
+        self.alter_attraction_comment_trump_count(comment_id,1)
+        return data_ret
 
+    def cancel_trump_attraction_comment(self,account_id:int,identify:str,comment_id:int) -> dict:
+        """
+        取消经典评论点赞操作
+        :param account_id:
+        :param identify:
+        :param comment_id:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        del_str="""delete from trump_attraction_comments where account_id=%s and identify='%s' and comment_id=%s"""%\
+                (account_id,identify,comment_id)
+        data_ret = {'state': 1}
+        cur.execute(del_str)
+        # 更新景点评论点赞数
+        self.alter_attraction_comment_trump_count(comment_id,-1)
+        return data_ret
+
+    def alter_attraction_comment_trump_count(self,comment_id:int,alter_num:int) -> dict:
+        """
+        更新景点评论点赞数据
+        :param comment_id:
+        :param alter_num:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        update_str="""update attraction_comments set trump_count =trump_count+%s where id=%s"""%(alter_num,comment_id)
+        data_ret = {'state': 1}
+        cur.execute(update_str)
+        return data_ret
+
+    def get_my_attraction_trump_comment(self,account_id:int,identify:str) -> dict:
+        """
+        获取我的景点评论点赞数据
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select comment_id from trump_attraction_comments where account_id=%s and identify='%s'"""%(account_id,identify)
+        data_ret={'state': 1,"comments":[]}
+        cur.execute(get_str)
+        my_trump_comments=cur.fetchall()
+        for row in my_trump_comments:
+            data_ret["comments"].append(row[0])
+        return data_ret

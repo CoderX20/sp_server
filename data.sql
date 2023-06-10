@@ -58,7 +58,7 @@ CREATE TABLE `attraction_comments` (
   `time` varchar(50) DEFAULT NULL,
   `emotion` int DEFAULT NULL COMMENT '情感倾向',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='景区评论表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='景区评论表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +67,7 @@ CREATE TABLE `attraction_comments` (
 
 LOCK TABLES `attraction_comments` WRITE;
 /*!40000 ALTER TABLE `attraction_comments` DISABLE KEYS */;
+INSERT INTO `attraction_comments` VALUES (1,'很好',1,1,'admin','admin',0,'2023-6-9',0),(5,'非常好玩的',5,1,'admin','admin',1,'2023-6-9',0);
 /*!40000 ALTER TABLE `attraction_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,6 +160,30 @@ INSERT INTO `messages` VALUES (7,'比较划算的体验','2023-5-31',1,1,NULL,'J
 UNLOCK TABLES;
 
 --
+-- Table structure for table `trump_attraction_comments`
+--
+
+DROP TABLE IF EXISTS `trump_attraction_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `trump_attraction_comments` (
+  `account_id` int DEFAULT NULL COMMENT '账户id',
+  `identify` varchar(20) DEFAULT NULL COMMENT '账户类型',
+  `comment_id` int DEFAULT NULL COMMENT '评论ID'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='景点评论点赞表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `trump_attraction_comments`
+--
+
+LOCK TABLES `trump_attraction_comments` WRITE;
+/*!40000 ALTER TABLE `trump_attraction_comments` DISABLE KEYS */;
+INSERT INTO `trump_attraction_comments` VALUES (5,'users',5);
+/*!40000 ALTER TABLE `trump_attraction_comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `trump_messages`
 --
 
@@ -216,4 +241,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-08 21:40:23
+-- Dump completed on 2023-06-10 10:58:32

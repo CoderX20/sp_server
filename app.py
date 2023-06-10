@@ -1,6 +1,6 @@
 from flask import Flask,jsonify,make_response,request
 from flask_cors import CORS
-from dbIO import MySQLClient,MessageNew,AttractionComment
+from dbIO import MySQLClient,MessageNew
 
 app = Flask(__name__)
 CORS(app,resources=r'/*') # 解决跨域
@@ -328,8 +328,8 @@ def add_attraction_comment():
     identify=data.get('identify')
     name=data.get('name')
     attraction_id=data.get('attraction_id')
-    print(comment,time,trump_count,account_id,identify,name,attraction_id)
-    post_res=db_set.add_new_attraction_comment(AttractionComment(comment=comment,time=time,trump_count=trump_count,account_id=account_id,identify=identify,name=name,attraction_id=attraction_id))
+    # print(comment,time,trump_count,account_id,identify,name,attraction_id)
+    post_res=db_set.add_new_attraction_comment(comment,time,attraction_id,account_id,name,identify)
     return make_response(jsonify(post_res))
 
 
@@ -380,6 +380,43 @@ def get_attraction_comments():
     data=request.get_json()
     attraction_id=data.get('attraction_id')
     post_res=db_set.get_attraction_comments(attraction_id)
+    return make_response(jsonify(post_res))
+
+
+@app.route('/trumpAttractionComment',methods=['POST'])
+def trump_attraction_comment():
+    """
+    点赞景点评论
+    :return:
+    """
+    data=request.get_json()
+    account_id=data.get('id')
+    identify=data.get('identify')
+    comment_id=data.get('comment_id')
+    post_res=db_set.trump_attraction_comment(account_id,identify,comment_id)
+    return make_response(jsonify(post_res))
+
+
+@app.route('/cancelTrumpAttractionComment',methods=['POST'])
+def cancel_trump_attraction_comment():
+    """
+    取消景点点赞
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('id')
+    identify = data.get('identify')
+    comment_id = data.get('comment_id')
+    post_res=db_set.cancel_trump_attraction_comment(account_id,identify,comment_id)
+    return make_response(jsonify(post_res))
+
+
+@app.route('/getMyAttractionTrumpComments',methods=['POST'])
+def get_my_attraction_trump_comments():
+    data=request.get_json()
+    account_id=data.get('id')
+    identify=data.get('identify')
+    post_res=db_set.get_my_attraction_trump_comment(account_id,identify)
     return make_response(jsonify(post_res))
 
 
