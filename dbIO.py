@@ -2,6 +2,8 @@
 
 import pymysql
 from NeuralNetwork import NNEmotionClassifyMode
+import base64
+import jieba as jb
 
 
 class MessageNew:
@@ -706,11 +708,38 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
+        base_url="http://127.0.0.1:5260/"
         if img is not None:
-            upload_str="""update attractions set img='%s' where id=%s """%(img,attraction_id)
+            save_path="static/img/%s.jpg"%attraction_id
+            image_data=base64.b64decode(img.split(',')[-1])
+            with open(save_path, "wb") as f:
+                f.write(image_data)
+            upload_str="""update attractions set img='%s' where id=%s """%(base_url+save_path,attraction_id)
             cur.execute(upload_str)
         if len(des)>0:
             upload_str="""update attractions set des='%s' where id=%s """%(des,attraction_id)
             cur.execute(upload_str)
         data_ret = {'state': 1}
         return data_ret
+
+    def get_word_cut_attraction_by_id(self,attraction_id:int) -> dict:
+        """
+        通过id获取某一个景点的评论的分词以及统计
+        :param attraction_id:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select comment from attraction_comments where attraction_id=%s"""%attraction_id
+        cur.execute(get_str)
+        comments=cur.fetchall()
+        # print(comments)
+        words_arr=[]
+        for el in comments:
+            words_arr+=jb.lcut(el[0])
+        words_count={}
+        for el in words_arr:
+            words_count[el]=0
+        for el in words_arr:
+            words_count[el]+=1
+        return {"state":1,"words":words_count}

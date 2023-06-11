@@ -434,5 +434,17 @@ def upload_attraction_image():
     return make_response(jsonify(post_res))
 
 
+@app.route('/getWordsCutAttractionComments',methods=["POST"])
+def get_words_cut_attraction_comments():
+    """
+    获取景点评论的分词统计
+    :return:
+    """
+    data = request.get_json()
+    attraction_id=data.get("attraction_id")
+    post_res=db_set.get_word_cut_attraction_by_id(attraction_id)
+    return post_res
+
+
 if __name__=="__main__":
     app.run(port=5260)
