@@ -420,5 +420,19 @@ def get_my_attraction_trump_comments():
     return make_response(jsonify(post_res))
 
 
+@app.route('/uploadAttractionData',methods=['POST','GET'])
+def upload_attraction_image():
+    """
+    上传景点描述、图片
+    :return:
+    """
+    data=request.get_json()
+    img=data.get('img')
+    des=data.get('des')
+    attraction_id=data.get('attraction_id')
+    post_res=db_set.upload_attraction_des(attraction_id,des,img)
+    return make_response(jsonify(post_res))
+
+
 if __name__=="__main__":
     app.run(port=5260)

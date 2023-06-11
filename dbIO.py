@@ -538,10 +538,10 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        get_str="""select id,comment,account_id,identify,name,trump_count,time 
+        get_str="""select id,comment,account_id,identify,name,trump_count,time,emotion 
         from attraction_comments 
         where attraction_id=%s 
-        order by time desc,trump_count desc ;"""%attraction_id
+        order by time asc,trump_count desc ;"""%attraction_id
         data_ret={'state':1,'comments':[]}
         cur.execute(get_str)
         comments=cur.fetchall()
@@ -553,7 +553,8 @@ class MySQLClient:
                 'identify':row[3],
                 'name':row[4],
                 'trump_count':row[5],
-                'time':row[6]
+                'time':row[6],
+                "emotion":row[7]
             })
         return data_ret
 
@@ -693,4 +694,23 @@ class MySQLClient:
         my_trump_comments=cur.fetchall()
         for row in my_trump_comments:
             data_ret["comments"].append(row[0])
+        return data_ret
+
+    def upload_attraction_des(self,attraction_id:int,des:str,img:str) -> dict:
+        """
+        上传景点描述和图片
+        :param attraction_id:
+        :param des:
+        :param img:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        if img is not None:
+            upload_str="""update attractions set img='%s' where id=%s """%(img,attraction_id)
+            cur.execute(upload_str)
+        if len(des)>0:
+            upload_str="""update attractions set des='%s' where id=%s """%(des,attraction_id)
+            cur.execute(upload_str)
+        data_ret = {'state': 1}
         return data_ret
