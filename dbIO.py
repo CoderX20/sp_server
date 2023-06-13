@@ -755,7 +755,7 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        get_str="""select id,account_id,identify,route from routes where account_id=%s and identify='%s'"""%(account_id,identify)
+        get_str="""select id,account_id,identify,route,name from routes where account_id=%s and identify='%s'"""%(account_id,identify)
         data_ret = {'state': 1,'routes':[]}
         cur.execute(get_str)
         routes_data=cur.fetchall()
@@ -764,7 +764,23 @@ class MySQLClient:
                 'id':row[0],
                 'account_id':row[1],
                 'identify':row[2],
-                'route':row[3]
+                'route':row[3],
+                'name':row[4]
             })
         return data_ret
 
+    def add_new_route(self,account_id:int,identify:str,name:str,route:str) -> dict:
+        """
+        添加新的路线
+        :param account_id:
+        :param identify:
+        :param name:
+        :param route:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        add_str="""insert into routes (name, account_id, identify, route) values ('%s',%s,'%s','%s')"""%(name,account_id,identify,route)
+        data_ret = {'state': 1}
+        cur.execute(add_str)
+        return data_ret

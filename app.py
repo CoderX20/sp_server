@@ -459,5 +459,20 @@ def get_routes_account_id():
     return make_response(jsonify(post_res))
 
 
+@app.route('/addNewRoute',methods=['POST'])
+def add_new_route():
+    """
+    添加新的路线
+    :return:
+    """
+    data=request.get_json()
+    account_id=data.get('account_id')
+    identify=data.get('identify')
+    route_name=data.get('route_name')
+    route=data.get('route')
+    post_res=db_set.add_new_route(account_id,identify,name=route_name,route=route)
+    return make_response(jsonify(post_res))
+
+
 if __name__=="__main__":
     app.run(port=5260)
