@@ -446,5 +446,18 @@ def get_words_cut_attraction_comments():
     return post_res
 
 
+@app.route('/getRoutesByAccountID',methods=['POST'])
+def get_routes_account_id():
+    """
+    根据用户id获取路线数据
+    :return:
+    """
+    data = request.get_json()
+    account_id=data.get('account_id')
+    identify=data.get('identify')
+    post_res=db_set.get_routes_by_userid(account_id,identify)
+    return make_response(jsonify(post_res))
+
+
 if __name__=="__main__":
     app.run(port=5260)

@@ -409,7 +409,7 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        get_str="""select id,name,city,county,address,level,lng,lat,score,img from attractions where 1=1 """
+        get_str="""select id,name,city,county,address,level,lng,lat,score,img,period from attractions where 1=1 """
         if len(city)>0:
             get_str+=""" and city='%s' """%city
         if len(level)>0:
@@ -433,6 +433,7 @@ class MySQLClient:
                     "lat":row[7],
                     "score":row[8],
                     "img":row[9],
+                    "period":row[10],
                 })
         return data_ret
 
@@ -444,7 +445,7 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        get_str="""select id,name,city,county,address,level,lng,lat,score,img,des from attractions where id=%s"""%attraction_id
+        get_str="""select id,name,city,county,address,level,lng,lat,score,img,des,period from attractions where id=%s"""%attraction_id
         data_ret = {'state': 1, "attractions": {}}
         # print(get_str)
         cur.execute(get_str)
@@ -460,6 +461,7 @@ class MySQLClient:
         data_ret['attractions']['score']=attraction_detail[8]
         data_ret['attractions']['img']=attraction_detail[9]
         data_ret['attractions']['des']=attraction_detail[10]
+        data_ret['attractions']['period']=attraction_detail[11]
         return data_ret
 
     def add_attraction_score(self,account_id:int,identify:str,attraction_id:int,score:float) -> dict:
@@ -743,3 +745,26 @@ class MySQLClient:
         for el in words_arr:
             words_count[el]+=1
         return {"state":1,"words":words_count}
+
+    def get_routes_by_userid(self,account_id:int,identify:str) -> dict:
+        """
+        利用用户id获取路线
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select id,account_id,identify,route from routes where account_id=%s and identify='%s'"""%(account_id,identify)
+        data_ret = {'state': 1,'routes':[]}
+        cur.execute(get_str)
+        routes_data=cur.fetchall()
+        for row in routes_data:
+            data_ret['routes'].append({
+                'id':row[0],
+                'account_id':row[1],
+                'identify':row[2],
+                'route':row[3]
+            })
+        return data_ret
+
