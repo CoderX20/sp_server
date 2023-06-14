@@ -470,7 +470,9 @@ def add_new_route():
     identify=data.get('identify')
     route_name=data.get('route_name')
     route=data.get('route')
-    post_res=db_set.add_new_route(account_id,identify,name=route_name,route=route)
+    start=data.get('start')
+    line=data.get('line')
+    post_res=db_set.add_new_route(account_id,identify,name=route_name,route=route,start=start,line=line)
     return make_response(jsonify(post_res))
 
 
