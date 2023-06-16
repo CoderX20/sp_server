@@ -516,5 +516,19 @@ def register_admin():
     return make_response(jsonify(post_res))
 
 
+@app.route('/editMySignature',methods=['POST'])
+def edit_my_signature():
+    """
+    编辑个性签名
+    :return:
+    """
+    data=request.get_json()
+    account_id=data.get('account_id')
+    identify=data.get('identify')
+    signature=data.get('signature')
+    post_res=db_set.edit_my_signature(account_id,identify,signature)
+    return make_response(jsonify(post_res))
+
+
 if __name__=="__main__":
     app.run(port=5260)

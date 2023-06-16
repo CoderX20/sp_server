@@ -55,9 +55,10 @@ class MySQLClient:
         tar_user['user']['password'] = ""
         tar_user['user']['identify'] = ""
         tar_user['user']['avatar']=""
+        tar_user['user']['signature']=""
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        check_SQL_str = "select id,name,password,avatar from %s where name='%s'" % (identify, username)
+        check_SQL_str = "select id,name,password,avatar,signature from %s where name='%s'" % (identify, username)
         cur.execute(check_SQL_str)
         check_rows = cur.fetchall()
         if len(check_rows) < 1:
@@ -73,6 +74,7 @@ class MySQLClient:
                     tar_user['user']['password']=row[2]
                     tar_user['user']['avatar']=row[3]
                     tar_user['user']['identify']=identify
+                    tar_user['user']['signature']=row[4]
                     return tar_user
             # 密码错误
             tar_user['state']=0
@@ -87,7 +89,7 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        register_sql_str="insert into sp_app_datasets.users (name, password,avatar) values ('%s','%s','')"%(username,password)
+        register_sql_str="insert into sp_app_datasets.users (name, password,avatar,signature) values ('%s','%s','','')"%(username,password)
         affect_rows=cur.execute(register_sql_str)
         # 获取用户的全部信息
         reg_res = self.login_check(username, password, "users")
@@ -847,8 +849,23 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        add_str="""insert into admin (name, password, avatar) values ('%s','%s','');"""%(name,password)
+        add_str="""insert into admin (name, password, avatar,signature) values ('%s','%s','','');"""%(name,password)
         data_ret={'state':1}
         cur.execute(add_str)
+        return data_ret
+
+    def edit_my_signature(self,account_id:int,identify:str,signature:str) -> dict:
+        """
+        编辑我的个性签名
+        :param account_id:
+        :param identify:
+        :param signature:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        edit_str="""update %s set signature='%s' where id=%s"""%(identify,signature,account_id)
+        data_ret = {'state': 1}
+        cur.execute(edit_str)
         return data_ret
 
