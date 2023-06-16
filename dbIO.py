@@ -141,7 +141,7 @@ class MySQLClient:
                   messageInfo.user_id,
                   messageInfo.admin_id,
                   messageInfo.name,
-                  self.NN_mode.predict_single(messageInfo.message)[0])
+                  self.NN_mode.predict_pro(messageInfo.message))
         # print(add_str)
         data_ret={'state':1}
         affect_rows=cur.execute(add_str)
@@ -363,10 +363,10 @@ class MySQLClient:
         cur = con.cursor()
         if identify=="users":
             set_str="""update messages set message='%s' emotion=%s where userID=%s and id=%s"""%\
-                    (new_message,self.NN_mode.predict_single(new_message)[0],userid,message_id)
+                    (new_message,self.NN_mode.predict_pro(new_message),userid,message_id)
         else:
             set_str="""update messages set message='%s' emotion=%s where adminID=%s and id=%s"""%\
-                    (new_message,self.NN_mode.predict_single(new_message)[0],userid,message_id)
+                    (new_message,self.NN_mode.predict_pro(new_message),userid,message_id)
         data_ret = {'state': 1}
         if cur.execute(set_str)>=1:
             data_ret['state']=1
@@ -588,7 +588,7 @@ class MySQLClient:
                  identify,
                  name,
                  time,
-                 self.NN_mode.predict_single(comment)[0])
+                 self.NN_mode.predict_pro(comment))
         # print(add_str)
         data_ret={'state':1}
         cur.execute(add_str)

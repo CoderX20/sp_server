@@ -58,7 +58,7 @@ CREATE TABLE `attraction_comments` (
   `name` varchar(1000) DEFAULT NULL COMMENT '用户名',
   `trump_count` int DEFAULT '0',
   `time` varchar(50) DEFAULT NULL,
-  `emotion` int DEFAULT NULL COMMENT '情感倾向',
+  `emotion` double DEFAULT NULL COMMENT '情感倾向',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='景区评论表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -291,7 +291,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Json','123','http://127.0.0.1:5260/static/avatar/1686895837.6029816_1.webp','废物一个\n'),(2,'Jack','123','http://127.0.0.1:5260/static/img/users_2.webp',''),(4,'Bob','123','http://127.0.0.1:5260/static/img/users_4.webp',''),(5,'Eva','123','http://127.0.0.1:5260/static/img/users_5.webp',''),(6,'Tom','123','http://127.0.0.1:5260/static/img/users_6.webp',''),(8,'Alice','123','http://127.0.0.1:5260/static/img/users_8.webp',''),(9,'Lee','123','',''),(10,'Mark','123','','');
+INSERT INTO `users` VALUES (1,'Json','123','http://127.0.0.1:5260/static/avatar/1686895837.6029816_1.webp','废物一个\n'),(2,'Jack','123','http://127.0.0.1:5260/static/img/users_2.webp','躺平的废物在四川\n'),(4,'Bob','123','http://127.0.0.1:5260/static/img/users_4.webp',''),(5,'Eva','123','http://127.0.0.1:5260/static/img/users_5.webp',''),(6,'Tom','123','http://127.0.0.1:5260/static/img/users_6.webp',''),(8,'Alice','123','http://127.0.0.1:5260/static/img/users_8.webp',''),(9,'Lee','123','',''),(10,'Mark','123','','');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -304,4 +304,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-16 15:57:46
+-- Dump completed on 2023-06-16 17:16:25

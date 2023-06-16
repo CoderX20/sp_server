@@ -19,6 +19,10 @@ class NNEmotionClassifyMode(EmotionClassifyModeGaussian):
         self.mode=MLPClassifier(hidden_layer_sizes=hidden_layer_sizes,activation=active_fun,solver=solver,alpha=alpha)
         self.train_mode(tsv_path)
 
+    def predict_pro(self,sentence:str) -> float:
+        """概率预测"""
+        return self.mode.predict_proba([self.vec_maker.build_sentence_vec_one(sentence)])[0][1]
+
 
 if __name__=="__main__":
     word_dict="./datasets/word_dict.json"
