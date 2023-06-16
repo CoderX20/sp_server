@@ -476,5 +476,32 @@ def add_new_route():
     return make_response(jsonify(post_res))
 
 
+@app.route('/alterAccountAvatar',methods=['POST'])
+def alter_user_avatar():
+    """
+    修改用户头像
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    avatar_data=data.get('avatar_data')
+    post_res=db_set.alter_user_avatar(account_id,identify,avatar_data)
+    return make_response(jsonify(post_res))
+
+
+@app.route('/getAllMyAttractionComments',methods=['POST'])
+def get_all_my_attractions_comments():
+    """
+    获取当前用户的所有景区评论信息
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    post_res=db_set.get_all_my_attraction_comments(account_id,identify)
+    return make_response(jsonify(post_res))
+
+
 if __name__=="__main__":
     app.run(port=5260)

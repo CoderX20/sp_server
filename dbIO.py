@@ -53,9 +53,10 @@ class MySQLClient:
         tar_user['user']['name'] = ""
         tar_user['user']['password'] = ""
         tar_user['user']['identify'] = ""
+        tar_user['user']['avatar']=""
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        check_SQL_str = "select id,name,password from %s where name='%s'" % (identify, username)
+        check_SQL_str = "select id,name,password,avatar from %s where name='%s'" % (identify, username)
         cur.execute(check_SQL_str)
         check_rows = cur.fetchall()
         if len(check_rows) < 1:
@@ -69,6 +70,7 @@ class MySQLClient:
                     tar_user['user']['id']=row[0]
                     tar_user['user']['username']=row[1]
                     tar_user['user']['password']=row[2]
+                    tar_user['user']['avatar']=row[3]
                     tar_user['user']['identify']=identify
                     return tar_user
             # 密码错误
@@ -84,7 +86,7 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        register_sql_str="insert into sp_app_datasets.users (name, password) values ('%s','%s')"%(username,password)
+        register_sql_str="insert into sp_app_datasets.users (name, password,avatar) values ('%s','%s','')"%(username,password)
         affect_rows=cur.execute(register_sql_str)
         # 获取用户的全部信息
         reg_res = self.login_check(username, password, "users")
@@ -710,18 +712,20 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
+        data_ret = {'state': 1}
         base_url="http://127.0.0.1:5260/"
         if img is not None:
-            save_path="static/img/%s.jpg"%attraction_id
+            save_path="static/img/%s.webp"%attraction_id
             image_data=base64.b64decode(img.split(',')[-1])
             with open(save_path, "wb") as f:
                 f.write(image_data)
             upload_str="""update attractions set img='%s' where id=%s """%(base_url+save_path,attraction_id)
             cur.execute(upload_str)
+            data_ret['img']=base_url+save_path
         if len(des)>0:
             upload_str="""update attractions set des='%s' where id=%s """%(des,attraction_id)
             cur.execute(upload_str)
-        data_ret = {'state': 1}
+            data_ret['des']=des
         return data_ret
 
     def get_word_cut_attraction_by_id(self,attraction_id:int) -> dict:
@@ -789,3 +793,47 @@ class MySQLClient:
         data_ret = {'state': 1}
         cur.execute(add_str)
         return data_ret
+
+    def alter_user_avatar(self,account_id:int,identify:str,avatar_data:str) -> dict:
+        """
+        修改用户头像
+        :param account_id:
+        :param identify:
+        :param avatar_data:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        base_url = "http://127.0.0.1:5260/"
+        save_path = "static/img/%s_%s.webp" % (identify,account_id)
+        image_data = base64.b64decode(avatar_data.split(',')[-1])
+        with open(save_path, "wb") as f:
+            f.write(image_data)
+        alter_str="""update %s set avatar = '%s' where id=%s;"""%(identify,base_url+save_path,account_id)
+        data_ret = {'state': 1,'avatar':base_url+save_path}
+        cur.execute(alter_str)
+        return data_ret
+
+    def get_all_my_attraction_comments(self,account_id:int,identify:str) -> dict:
+        """
+        获取当前用户在景点下的所有发言
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select id,comment,attraction_id,trump_count  from attraction_comments where account_id=%s and identify='%s'"""%\
+                (account_id,identify)
+        data_ret = {'state': 1,'comments':[]}
+        cur.execute(get_str)
+        my_comments=cur.fetchall()
+        for el in my_comments:
+            data_ret['comments'].append({
+                "id":el[0],
+                "comment":el[1],
+                "attraction_id":el[2],
+                "trump_count":el[3],
+            })
+        return data_ret
+
