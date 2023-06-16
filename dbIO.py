@@ -4,6 +4,7 @@ import pymysql
 from NeuralNetwork import NNEmotionClassifyMode
 import base64
 import jieba as jb
+import time
 
 
 class MessageNew:
@@ -715,7 +716,7 @@ class MySQLClient:
         data_ret = {'state': 1}
         base_url="http://127.0.0.1:5260/"
         if img is not None:
-            save_path="static/img/%s.webp"%attraction_id
+            save_path="static/img/%s_%s.webp"%(attraction_id,time.time())
             image_data=base64.b64decode(img.split(',')[-1])
             with open(save_path, "wb") as f:
                 f.write(image_data)
@@ -805,7 +806,7 @@ class MySQLClient:
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
         base_url = "http://127.0.0.1:5260/"
-        save_path = "static/img/%s_%s.webp" % (identify,account_id)
+        save_path = "static/avatar/%s_%s.webp" % (time.time(),account_id)
         image_data = base64.b64decode(avatar_data.split(',')[-1])
         with open(save_path, "wb") as f:
             f.write(image_data)
@@ -835,5 +836,19 @@ class MySQLClient:
                 "attraction_id":el[2],
                 "trump_count":el[3],
             })
+        return data_ret
+
+    def register_admin(self,name:str,password:str) -> dict:
+        """
+        注册新的管理员账号
+        :param name:
+        :param password:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        add_str="""insert into admin (name, password, avatar) values ('%s','%s','');"""%(name,password)
+        data_ret={'state':1}
+        cur.execute(add_str)
         return data_ret
 

@@ -503,5 +503,18 @@ def get_all_my_attractions_comments():
     return make_response(jsonify(post_res))
 
 
+@app.route('/registerAdmin',methods=["POST"])
+def register_admin():
+    """
+    注册新的管理员账户
+    :return:
+    """
+    data=request.get_json()
+    name=data.get('name')
+    password=data.get('password')
+    post_res=db_set.register_admin(name,password)
+    return make_response(jsonify(post_res))
+
+
 if __name__=="__main__":
     app.run(port=5260)
