@@ -826,9 +826,10 @@ class MySQLClient:
         """
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        get_str="""select id,comment,attraction_id,trump_count  from attraction_comments where account_id=%s and identify='%s'"""%\
+        get_str="""select id,comment,attraction_id,trump_count,time from attraction_comments where account_id=%s and identify='%s'"""%\
                 (account_id,identify)
         data_ret = {'state': 1,'comments':[]}
+        # print(get_str)
         cur.execute(get_str)
         my_comments=cur.fetchall()
         for el in my_comments:
@@ -837,6 +838,7 @@ class MySQLClient:
                 "comment":el[1],
                 "attraction_id":el[2],
                 "trump_count":el[3],
+                "time":el[4]
             })
         return data_ret
 

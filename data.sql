@@ -38,7 +38,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admin','123','http://127.0.0.1:5260/static/avatar/1686896284.9975088_1.webp',''),(2,'root','123','http://127.0.0.1:5260/static/avatar/1686899548.44637_2.webp','好好好，对对对\n');
+INSERT INTO `admin` VALUES (1,'admin','123','http://127.0.0.1:5260/static/avatar/1686896284.9975088_1.webp','怎么，你不服气？\n'),(2,'root','123','http://127.0.0.1:5260/static/avatar/1686899548.44637_2.webp','好好干，日子会越来越甜的\n\n');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `attraction_comments` (
   `time` varchar(50) DEFAULT NULL,
   `emotion` double DEFAULT NULL COMMENT '情感倾向',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='景区评论表';
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='景区评论表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `attraction_comments` (
 
 LOCK TABLES `attraction_comments` WRITE;
 /*!40000 ALTER TABLE `attraction_comments` DISABLE KEYS */;
-INSERT INTO `attraction_comments` VALUES (1,'很好',1,1,'admin','admin',2,'2023-6-9',1),(5,'非常好玩的',5,1,'admin','admin',1,'2023-6-9',1),(7,'这个确实很好玩，让人惊叹于大自然的奇妙',1,5,'users','Eva',2,'2023-6-10',1),(8,'刚刚回来，很推荐大家去玩',1,1,'users','Json',1,'2023-6-10',1),(9,'客服真的不行呀，走了好久都没有水卖',1,2,'users','Jack',0,'2023-6-10',1),(10,'这个还是很好的，感觉非常的不错，五星好评了',1,9,'users','Lee',1,'2023-6-10',1),(11,'垃圾玩意浪费时间，简直花钱买罪受',1,8,'users','Alice',1,'2023-6-10',0),(12,'部分评论的反应已经和景区管理方交涉了，他们表示将在数日内进行自我整改，对此对所有游客表示抱歉，希望大家玩的开心',1,1,'admin','admin',1,'2023-6-10',1),(13,'好，很好，非常好！！！',1,10,'users','Mark',0,'2023-6-10',0),(14,'这地方是买赞买来的？其实真的很差',1,10,'users','Mark',0,'2023-6-10',0),(15,'欢迎大家来玩',12,1,'admin','admin',0,'2023-6-12',0),(17,'很好玩，下次还来',0,1,'users','Json',2,'2023-6-15',1),(18,'好玩，下次找机会还会来的',1,4,'users','Bob',0,'2023-6-15',1),(19,'说实话，感觉一般般，人工痕迹很多',0,4,'users','Bob',0,'2023-6-15',0),(20,'总体感觉让人还是可以，景区工作人员的服务感觉不太行，要改进',1,2,'users','Jack',1,'2023-6-15',0),(21,'风景是很好的，陪朋友来玩，大家玩的都很开心',0,8,'users','Alice',0,'2023-6-15',1),(22,'第二次来玩，每一次玩的感受都不一样，山里的风景真的很好，给个好评',1,8,'users','Alice',0,'2023-6-15',1);
+INSERT INTO `attraction_comments` VALUES (1,'很好',1,1,'admin','admin',2,'2023-6-9',1),(5,'非常好玩的',5,1,'admin','admin',1,'2023-6-9',1),(7,'这个确实很好玩，让人惊叹于大自然的奇妙',1,5,'users','Eva',2,'2023-6-10',1),(8,'刚刚回来，很推荐大家去玩',1,1,'users','Json',2,'2023-6-10',1),(9,'客服真的不行呀，走了好久都没有水卖',1,2,'users','Jack',0,'2023-6-10',1),(10,'这个还是很好的，感觉非常的不错，五星好评了',1,9,'users','Lee',2,'2023-6-10',1),(11,'垃圾玩意浪费时间，简直花钱买罪受',1,8,'users','Alice',1,'2023-6-10',0),(12,'部分评论的反应已经和景区管理方交涉了，他们表示将在数日内进行自我整改，对此对所有游客表示抱歉，希望大家玩的开心',1,1,'admin','admin',3,'2023-6-10',1),(13,'好，很好，非常好！！！',1,10,'users','Mark',1,'2023-6-10',0),(14,'这地方是买赞买来的？其实真的很差',1,10,'users','Mark',1,'2023-6-10',0),(15,'欢迎大家来玩',12,1,'admin','admin',0,'2023-6-12',0),(17,'很好玩，下次还来',0,1,'users','Json',2,'2023-6-15',1),(18,'好玩，下次找机会还会来的',1,4,'users','Bob',1,'2023-6-15',1),(19,'说实话，感觉一般般，人工痕迹很多',0,4,'users','Bob',1,'2023-6-15',0),(20,'总体感觉让人还是可以，景区工作人员的服务感觉不太行，要改进',1,2,'users','Jack',3,'2023-6-15',0),(21,'风景是很好的，陪朋友来玩，大家玩的都很开心',0,8,'users','Alice',1,'2023-6-15',1),(22,'第二次来玩，每一次玩的感受都不一样，山里的风景真的很好，给个好评',1,8,'users','Alice',1,'2023-6-15',1),(23,'自然景色很好，感觉真的很不错',0,2,'users','Jack',3,'2023-6-16',0.999352788507922),(24,'九寨沟欢迎大家',0,2,'admin','root',2,'2023-6-16',0.00023909892916232703),(25,'今年新装修十分优秀，希望大家玩的开心',0,1,'admin','admin',2,'2023-6-16',0.923977597592219),(26,'风景是很好，但是游客的素质有待提高',0,1,'users','Json',2,'2023-6-16',0.96423712494013),(27,'景区专车脏，服务人员态度极差，再也不来了',0,9,'users','Lee',2,'2023-6-16',0.03166975589068047),(28,'水卖6元一瓶，你咋不直接抢呢？',0,9,'users','Lee',1,'2023-6-16',0.017277907595635845),(29,'来的时候山上特别冷，景区居然没棉袄卖',0,2,'users','Jack',1,'2023-6-16',0.9290460451986573),(30,'不用多说，玩的就是爽',0,10,'users','Mark',2,'2023-6-16',0.0038669441023752244);
 /*!40000 ALTER TABLE `attraction_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,7 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` VALUES (7,'比较划算的体验','2023-5-31',1,1,NULL,'Json',1),(8,'玩的很不开心，大多数的景点和街边小摊没区别，客服态度极其恶劣','2023-5-31',2,4,NULL,'Bob',0),(9,'关于客服的问题已经反馈出去了，希望各位游客在四川好好的玩，有什么问题可以在这咨询','2023-5-31',4,NULL,1,'admin',1),(12,'感觉升仙了','2023-5-31',3,2,NULL,'Jack',1),(14,'景区宰客乱收费，一根香肠九块五','2023-5-31',1,4,NULL,'Bob',0),(16,'感觉不太行的样子','2023-6-1',2,5,NULL,'Eva',0),(17,'人很多厕所不够用，希望管理方能管管','2023-6-1',4,2,NULL,'Jack',0),(18,'感觉还算比较良心了','2023-6-1',1,6,NULL,'Tom',1),(21,'十分舒适','2023-6-2',3,1,NULL,'Json',1),(22,'不错，很享受','2023-6-3',2,1,NULL,'Json',1),(23,'还是很好的','2023-6-3',2,6,NULL,'Tom',1),(24,'不好玩呀','2023-6-3',1,1,NULL,'Json',0),(25,'四川挺好玩的呀','2023-6-3',2,5,NULL,'Eva',1),(26,'周边的景点很好玩','2023-6-4',2,5,NULL,'Eva',1),(29,'在四川玩的很开心','2023-6-15',1,1,NULL,'Json',1);
+INSERT INTO `messages` VALUES (7,'比较划算的体验','2023-5-31',1,1,NULL,'Json',1),(8,'玩的很不开心，大多数的景点和街边小摊没区别，客服态度极其恶劣','2023-5-31',2,4,NULL,'Bob',0),(9,'关于客服的问题已经反馈出去了，希望各位游客在四川好好的玩，有什么问题可以在这咨询','2023-5-31',4,NULL,1,'admin',1),(12,'感觉升仙了','2023-5-31',3,2,NULL,'Jack',1),(14,'景区宰客乱收费，一根香肠九块五','2023-5-31',1,4,NULL,'Bob',0),(16,'感觉不太行的样子','2023-6-1',2,5,NULL,'Eva',0),(17,'人很多厕所不够用，希望管理方能管管','2023-6-1',5,2,NULL,'Jack',0),(18,'感觉还算比较良心了','2023-6-1',1,6,NULL,'Tom',1),(21,'十分舒适','2023-6-2',3,1,NULL,'Json',1),(22,'不错，很享受','2023-6-3',2,1,NULL,'Json',1),(23,'还是很好的','2023-6-3',2,6,NULL,'Tom',1),(24,'不好玩呀','2023-6-3',1,1,NULL,'Json',0),(25,'四川挺好玩的呀','2023-6-3',2,5,NULL,'Eva',1),(26,'周边的景点很好玩','2023-6-4',2,5,NULL,'Eva',1),(29,'在四川玩的很开心','2023-6-15',1,1,NULL,'Json',1);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +240,7 @@ CREATE TABLE `trump_attraction_comments` (
 
 LOCK TABLES `trump_attraction_comments` WRITE;
 /*!40000 ALTER TABLE `trump_attraction_comments` DISABLE KEYS */;
-INSERT INTO `trump_attraction_comments` VALUES (5,'users',5),(5,'users',1),(1,'users',6),(1,'users',1),(9,'users',6),(9,'users',7),(8,'users',10),(8,'users',11),(8,'users',6),(8,'users',8),(10,'users',12),(1,'admin',17),(2,'users',7),(2,'users',20),(8,'users',17);
+INSERT INTO `trump_attraction_comments` VALUES (5,'users',5),(5,'users',1),(1,'users',6),(1,'users',1),(9,'users',6),(9,'users',7),(8,'users',10),(8,'users',11),(8,'users',6),(8,'users',8),(10,'users',12),(1,'admin',17),(2,'users',7),(2,'users',20),(8,'users',17),(2,'users',19),(1,'users',23),(9,'users',27),(2,'users',23),(2,'users',28),(2,'users',29),(2,'users',26),(10,'users',30),(10,'users',25),(10,'users',20),(10,'users',18),(10,'users',10),(10,'users',14),(10,'users',13),(1,'users',30),(1,'users',24),(1,'admin',12),(1,'admin',24),(1,'admin',25),(1,'admin',26),(1,'admin',27),(1,'admin',23),(1,'admin',21),(2,'admin',12),(2,'admin',8),(2,'admin',22),(2,'admin',20);
 /*!40000 ALTER TABLE `trump_attraction_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +264,7 @@ CREATE TABLE `trump_messages` (
 
 LOCK TABLES `trump_messages` WRITE;
 /*!40000 ALTER TABLE `trump_messages` DISABLE KEYS */;
-INSERT INTO `trump_messages` VALUES (1,'users',11),(1,'users',12),(1,'users',14),(1,'users',9),(2,'users',16),(2,'users',11),(2,'users',12),(2,'users',9),(6,'users',8),(6,'users',17),(6,'users',9),(1,'admin',9),(1,'admin',12),(1,'admin',17),(5,'users',17),(3,'users',17),(3,'users',16),(3,'users',11),(1,'users',21),(6,'users',18),(6,'users',22),(6,'users',21),(1,'admin',22),(1,'users',24),(5,'users',23),(5,'users',7),(5,'users',25),(5,'users',8),(5,'users',26),(2,'users',26),(1,'admin',21),(1,'admin',23),(1,'users',29),(2,'users',25);
+INSERT INTO `trump_messages` VALUES (1,'users',11),(1,'users',12),(1,'users',14),(1,'users',9),(2,'users',16),(2,'users',11),(2,'users',12),(2,'users',9),(6,'users',8),(6,'users',17),(6,'users',9),(1,'admin',9),(1,'admin',12),(1,'admin',17),(5,'users',17),(3,'users',17),(3,'users',16),(3,'users',11),(1,'users',21),(6,'users',18),(6,'users',22),(6,'users',21),(1,'admin',22),(1,'users',24),(5,'users',23),(5,'users',7),(5,'users',25),(5,'users',8),(5,'users',26),(2,'users',26),(1,'admin',21),(1,'admin',23),(1,'users',29),(2,'users',25),(2,'users',17);
 /*!40000 ALTER TABLE `trump_messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,7 +291,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Json','123','http://127.0.0.1:5260/static/avatar/1686895837.6029816_1.webp','废物一个\n'),(2,'Jack','123','http://127.0.0.1:5260/static/img/users_2.webp','躺平的废物在四川\n'),(4,'Bob','123','http://127.0.0.1:5260/static/img/users_4.webp',''),(5,'Eva','123','http://127.0.0.1:5260/static/img/users_5.webp',''),(6,'Tom','123','http://127.0.0.1:5260/static/img/users_6.webp',''),(8,'Alice','123','http://127.0.0.1:5260/static/img/users_8.webp',''),(9,'Lee','123','',''),(10,'Mark','123','','');
+INSERT INTO `users` VALUES (1,'Json','123','http://127.0.0.1:5260/static/avatar/1686895837.6029816_1.webp','废物一个\n'),(2,'Jack','123','http://127.0.0.1:5260/static/img/users_2.webp','躺平的废物在四川\n'),(4,'Bob','123','http://127.0.0.1:5260/static/img/users_4.webp',''),(5,'Eva','123','http://127.0.0.1:5260/static/img/users_5.webp',''),(6,'Tom','123','http://127.0.0.1:5260/static/img/users_6.webp',''),(8,'Alice','123','http://127.0.0.1:5260/static/img/users_8.webp',''),(9,'Lee','123','http://127.0.0.1:5260/static/avatar/1686907710.0299854_9.webp',''),(10,'Mark','123','http://127.0.0.1:5260/static/avatar/1686921642.1864903_10.webp','你跟我说法制我都觉得搞笑\n');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -304,4 +304,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-16 17:16:25
+-- Dump completed on 2023-06-16 21:59:47
