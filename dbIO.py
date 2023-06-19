@@ -172,7 +172,7 @@ class MySQLClient:
 
     def get_trump_data(self,userid:int,identify:str) -> dict:
         """
-        获取用户点赞数据
+        获取用户大厅发言点赞数据
         :param userid:
         :param identify:
         :return:
@@ -332,13 +332,16 @@ class MySQLClient:
         :param identify:
         :return:
         """
+        data_ret = {'state': 1, "message_data": []}
+        if userid is None or identify is None:
+            data_ret['state']=-1
+            return data_ret
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
         if identify=="users":
             get_str="""select id,message,time,trumpCount from messages where userID=%s order by time desc,trumpCount desc,message asc"""%userid
         else:
             get_str="""select id,message,time,trumpCount from messages where adminID=%s order by time desc,trumpCount desc,message asc"""%userid
-        data_ret={'state':1,"message_data":[]}
         cur.execute(get_str)
         message_data=cur.fetchall()
         for row in message_data:
@@ -725,7 +728,7 @@ class MySQLClient:
             upload_str="""update attractions set img='%s' where id=%s """%(base_url+save_path,attraction_id)
             cur.execute(upload_str)
             data_ret['img']=base_url+save_path
-        if len(des)>0:
+        if des is not None:
             upload_str="""update attractions set des='%s' where id=%s """%(des,attraction_id)
             cur.execute(upload_str)
             data_ret['des']=des
@@ -824,11 +827,14 @@ class MySQLClient:
         :param identify:
         :return:
         """
+        data_ret = {'state': 1, 'comments': []}
+        if account_id is None or identify is None :
+            data_ret['state']=-1
+            return data_ret
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
         get_str="""select id,comment,attraction_id,trump_count,time from attraction_comments where account_id=%s and identify='%s'"""%\
                 (account_id,identify)
-        data_ret = {'state': 1,'comments':[]}
         # print(get_str)
         cur.execute(get_str)
         my_comments=cur.fetchall()
