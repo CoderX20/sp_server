@@ -49,3 +49,31 @@ class RouteDb(MySQLClient):
         cur.execute(add_str)
         return data_ret
 
+    def update_route_attractions(self,route_id:int,attractions:str) -> dict:
+        """
+        更新路线上的旅游景点
+        :param route_id:
+        :param attractions:
+        :return:
+        """
+        data_ret = {'state': 1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        update_str="""update routes set route='%s' where id=%s"""%(attractions,route_id)
+        cur.execute(update_str)
+        return data_ret
+
+    def add_route_start(self,route_id:int,route_start:str) -> dict:
+        """
+        修改路线上的起始点
+        :param route_id:
+        :param route_start:
+        :return:
+        """
+        data_ret = {'state': 1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        update_str="""update routes set start='%s' where id=%s"""%(route_start,route_id)
+        cur.execute(update_str)
+        return data_ret
+
