@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from flask import Blueprint,make_response,request,jsonify
-from hall.database import HallDb
+from hall.hall_database import HallDb
 from dbIO import MessageNew
 
 
@@ -97,4 +97,14 @@ def cancel_trump_hall_message():
     message_id = data.get('message_id')
     post_res=db_set.pop_trump_data(userid,identify,message_id)
     return post_res
+
+
+@hall_bp.route('/getHotAttractions',methods=['POST'])
+def get_hot_attractions():
+    """
+    获取热门景点
+    :return:
+    """
+    post_res=db_set.get_hot_attractions()
+    return make_response(jsonify(post_res))
 

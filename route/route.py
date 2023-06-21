@@ -64,3 +64,39 @@ def add_route_start():
     return make_response(jsonify(post_res))
 
 
+@route_bp.route('/delMyRoute',methods=['POST'])
+def del_my_route():
+    """
+    删除我的路线
+    :return:
+    """
+    data = request.get_json()
+    route_id = data.get('route_id')
+    post_res=db_set.del_my_route(route_id)
+    return make_response(jsonify(post_res))
+
+
+@route_bp.route('/alterRouteName',methods=['POST'])
+def alter_route_name():
+    """
+    修改路线名
+    :return:
+    """
+    data=request.get_json()
+    route_id=data.get('route_id')
+    route_name=data.get('route_name')
+    post_res=db_set.alter_route_name(route_id,route_name)
+    return make_response(jsonify(post_res))
+
+
+@route_bp.route('/getRouteByID',methods=['POST'])
+def get_route_id():
+    """
+    根据id获取路线信息
+    :return:
+    """
+    data = request.get_json()
+    route_id = data.get('route_id')
+    post_res=db_set.get_route_by_id(route_id)
+    return make_response(jsonify(post_res))
+

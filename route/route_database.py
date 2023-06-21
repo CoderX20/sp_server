@@ -77,3 +77,50 @@ class RouteDb(MySQLClient):
         cur.execute(update_str)
         return data_ret
 
+    def del_my_route(self,route_id:int) -> dict:
+        """
+        删除路线
+        :param route_id:
+        :return:
+        """
+        data_ret = {'state': 1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        del_str="""delete from routes where id=%s"""%route_id
+        cur.execute(del_str)
+        return data_ret
+
+    def alter_route_name(self,route_id:int,route_name:str) -> dict:
+        """
+        修改路线名称
+        :param route_id:
+        :param route_name:
+        :return:
+        """
+        data_ret = {'state': 1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        alter_str="""update routes set name='%s' where id=%s"""%(route_name,route_id)
+        cur.execute(alter_str)
+        return data_ret
+
+    def get_route_by_id(self,route_id:int) -> dict:
+        """
+        通过路线id获取路线数据
+        :param route_id:
+        :return:
+        """
+        data_ret = {'state': 1, "route":"","id":-1,"start":""}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select id,route,start from routes where id=%s"""%route_id
+        cur.execute(get_str)
+        route_data=cur.fetchall()
+        if len(route_data)<=0:
+            data_ret['state']=-1
+            return data_ret
+        data_ret["id"]=route_data[0][0]
+        data_ret["route"]=route_data[0][1]
+        data_ret["start"]=route_data[0][2]
+        return data_ret
+

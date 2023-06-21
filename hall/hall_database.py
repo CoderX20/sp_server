@@ -159,3 +159,22 @@ class HallDb(MySQLClient):
         cur = con.cursor()
         update_str="""update messages set trumpCount = trumpCount+%s where id=%s"""%(alter_num,message_id)
         cur.execute(update_str)
+
+    def get_hot_attractions(self):
+        """
+        获取热门推荐景点
+        :return:
+        """
+        data_ret = {'state': 1,"attractions":[]}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select id,name,img from attractions where level='5A' or level='4A' order by rand() limit 10"""
+        cur.execute(get_str)
+        attractions=cur.fetchall()
+        for row in attractions:
+            data_ret["attractions"].append({
+                "id":row[0],
+                "name":row[1],
+                "img":row[2],
+            })
+        return data_ret
