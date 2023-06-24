@@ -168,7 +168,7 @@ class HallDb(MySQLClient):
         data_ret = {'state': 1,"attractions":[]}
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        get_str="""select id,name,img from attractions where level='5A' or level='4A' order by rand() limit 10"""
+        get_str="""select id,name,img from attractions where level='5A' or level='4A' and img is not null order by rand() limit 5"""
         cur.execute(get_str)
         attractions=cur.fetchall()
         for row in attractions:

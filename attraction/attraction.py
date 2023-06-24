@@ -1,7 +1,7 @@
 # coding:utf-8
 
 from flask import Blueprint,make_response,request,jsonify
-from attraction.database import AttractionDB
+from attraction.attraction_database import AttractionDB
 
 
 attraction_bp=Blueprint("attraction",__name__,url_prefix='')

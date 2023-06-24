@@ -367,8 +367,9 @@ class AttractionDB(MySQLClient):
         for el in comments:
             words_arr+=jb.lcut(el[0])
         words_count={}
-        for el in words_arr:
+        words_new=[x for x in words_arr if x not in self.stop_words]
+        for el in words_new:
             words_count[el]=0
-        for el in words_arr:
+        for el in words_new:
             words_count[el]+=1
         return {"state":1,"words":words_count}

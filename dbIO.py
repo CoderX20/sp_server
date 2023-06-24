@@ -38,6 +38,8 @@ class MySQLClient:
         vec_mode = "./models/vec.model"
         self.NN_mode=NNEmotionClassifyMode(vec_len=100, txt_path=dict_path, stop_words_path=stop_words,vec_mode_path=vec_mode)
         self.NN_mode.load_mode("./models/NN.pickle")
+        with open(stop_words,encoding="UTF-8") as file_txt:
+            self.stop_words=file_txt.read().split('\n')
 
     def login_check(self,username:str,password:str,identify:str) -> dict:
         """登陆检查

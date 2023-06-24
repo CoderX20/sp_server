@@ -3,6 +3,7 @@ from attraction.attraction import attraction_bp
 from hall.hall import hall_bp
 from person.person import person_bp
 from route.route import route_bp
+from agency.agency import agency_bp
 from flask_cors import CORS
 from dbIO import MySQLClient
 
@@ -12,6 +13,7 @@ app.register_blueprint(attraction_bp)
 app.register_blueprint(hall_bp)
 app.register_blueprint(person_bp)
 app.register_blueprint(route_bp)
+app.register_blueprint(agency_bp)
 db_set=MySQLClient(host="localhost",port=3306,username='root',password='gx628572',database='sp_app_datasets')
 # cookie保存的时间
 cookie_time = 60*60*24
