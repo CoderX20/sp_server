@@ -130,3 +130,16 @@ def edit_my_signature():
     return make_response(jsonify(post_res))
 
 
+@person_bp.route('/getUserInfo',methods=['POST'])
+def get_user_info():
+    """
+    获取用户基础信息
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    post_res=db_set.get_user_info(account_id,identify)
+    return make_response(jsonify(post_res))
+
+

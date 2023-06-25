@@ -205,3 +205,25 @@ class PersonDb(MySQLClient):
         data_ret = {'state': 1}
         cur.execute(edit_str)
         return data_ret
+
+    def get_user_info(self,account_id:int,identify:str) -> dict:
+        """
+        获取用户基本信息
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select name,avatar,signature from %s where id=%s"""%(identify,account_id)
+        data_ret={'state':-1,'user':{}}
+        if account_id is None or (identify != "admin" and identify != "users"):
+            return data_ret
+        cur.execute(get_str)
+        user_data=cur.fetchall()
+        if len(user_data)>0:
+            data_ret['state']=1
+            data_ret['user']['name']=user_data[0][0]
+            data_ret['user']['avatar']=user_data[0][1]
+            data_ret['user']['signature']=user_data[0][2]
+        return data_ret
