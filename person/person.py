@@ -143,3 +143,85 @@ def get_user_info():
     return make_response(jsonify(post_res))
 
 
+@person_bp.route('/addSpaceMessages',methods=['POST'])
+def add_space_messages():
+    """
+    添加用户空间发言
+    :return:
+    """
+    data=request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    message=data.get('message')
+    img=data.get('img')
+    deliver_time=data.get('time')
+    post_res=db_set.add_space_messages(account_id,identify,message,img,deliver_time)
+    return make_response(jsonify(post_res))
+
+
+@person_bp.route('/getSpaceMessages',methods=['POST'])
+def get_space_messages():
+    """
+    获取空间内的发言信息
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    post_res=db_set.get_space_messages(account_id,identify)
+    return make_response(jsonify(post_res))
+
+
+@person_bp.route('/trumpSpaceMessage',methods=['POST'])
+def trump_space_message():
+    """
+    点赞个人空间里面的留言
+    :return:
+    """
+    data=request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    message_id=data.get('message_id')
+    post_res=db_set.trump_space_message(account_id,identify,message_id)
+    return make_response(jsonify(post_res))
+
+
+@person_bp.route('/cancelTrumpSpaceMessage',methods=['POST'])
+def cancel_trump_space_message():
+    """
+    取消点赞个人空间里面的留言
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    message_id = data.get('message_id')
+    post_res=db_set.cancel_trump_space_message(account_id,identify,message_id)
+    return make_response(jsonify(post_res))
+
+
+@person_bp.route('/getMyTrumpSpaceMessageData',methods=['POST'])
+def get_my_trump_space_message_data():
+    """
+    获取当前用户在个人空间上的点赞数据
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    post_res=db_set.get_my_trump_data(account_id,identify)
+    return make_response(jsonify(post_res))
+
+
+@person_bp.route('/getMyCollectSpaceMessageData',methods=['POST'])
+def get_my_collect_space_message_data():
+    """
+    获取当前用户在个人空间留言动态的收藏数据
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    post_res=db_set.get_space_message_collect_data(account_id,identify)
+    return make_response(jsonify(post_res))
+

@@ -21,7 +21,9 @@ cookie_time = 60*60*24
 
 @app.route('/')
 def hello_world():  # put application's code here
-    return "super map leaflet"
+    with open("./static/dist/index.html") as file_html:
+        page=file_html.read()
+    return page
 
 
 @app.route('/login',methods=['post'])

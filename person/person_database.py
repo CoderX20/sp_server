@@ -227,3 +227,141 @@ class PersonDb(MySQLClient):
             data_ret['user']['avatar']=user_data[0][1]
             data_ret['user']['signature']=user_data[0][2]
         return data_ret
+
+    def add_space_messages(self,account_id:int,identify:str,message:str,img:str,deliver_time:str,trump_count=0,collect_count=0) -> dict:
+        """
+        发表新的空间发言
+        :param account_id:
+        :param identify:
+        :param message:
+        :param img:
+        :param deliver_time:
+        :param trump_count:
+        :param collect_count:
+        :return:
+        """
+        data_ret = {'state': 1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        base_url = "http://127.0.0.1:5260/"
+        space_img=[]
+        for index,item in enumerate(img.split('\n')):
+            save_path="static/space/%s_%s_%s.webp"%(time.time(),account_id,index)
+            img_data=base64.b64decode(item.split(',')[-1])
+            with open(save_path,'wb') as file_img:
+                file_img.write(img_data)
+            space_img.append(base_url+save_path)
+        add_str="""insert into space_messages (account_id, identify, message, img, trump_count, collect_count, time) 
+        values (%s,'%s','%s','%s',%s,%s,'%s');"""%\
+                (account_id,identify,message,'\n'.join(space_img),trump_count,collect_count,deliver_time)
+        cur.execute(add_str)
+        return data_ret
+
+    def get_space_messages(self,account_id:int,identify:str) -> dict:
+        """
+        获取个人空间内的发言信息
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        data_ret = {'state': -1,'message_list':[]}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select id,account_id,identify,message,img,trump_count,collect_count ,time
+        from space_messages where account_id=%s and identify='%s'"""%\
+                (account_id,identify)
+        if account_id is None or (identify != "admin" and identify != "users"):
+            return data_ret
+        cur.execute(get_str)
+        space_data=cur.fetchall()
+        for row in space_data:
+            data_ret['message_list'].append({
+                'id':row[0],
+                'account_id':row[1],
+                'identify':row[2],
+                'message':row[3],
+                'img':row[4],
+                'trump_count':row[5],
+                'collect_count':row[6],
+                'time':row[7]
+            })
+        return data_ret
+
+    def trump_space_message(self,account_id:int,identify:str,message_id:int) -> dict:
+        """
+        点赞个人空间里的留言动态
+        :param account_id:
+        :param identify:
+        :param message_id:
+        :return:
+        """
+        data_ret = {'state': 1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        add_str="""insert into trump_space_messages (id, identify, message_id) values (%s,'%s',%s);"""%(account_id,identify,message_id)
+        cur.execute(add_str)
+        self.update_space_message_trump_count(message_id)
+        return data_ret
+
+    def cancel_trump_space_message(self,account_id:int,identify:str,message_id:int) -> dict:
+        """
+        取消点赞个人空间里面的留言动态
+        :param account_id:
+        :param identify:
+        :param message_id:
+        :return:
+        """
+        data_ret = {'state': 1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        del_str="""delete from trump_space_messages where id=%s and identify='%s' and message_id=%s;"""%(account_id,identify,message_id)
+        cur.execute(del_str)
+        self.update_space_message_trump_count(message_id)
+        return data_ret
+
+    def update_space_message_trump_count(self,message_id:int) :
+        """
+        更新个人空间留言的点赞数据
+        :param message_id:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        update_str="""update space_messages set trump_count = 
+        (select count(message_id) from trump_space_messages where message_id=%s) where message=%s;"""%(message_id,message_id)
+        cur.execute(update_str)
+
+    def get_my_trump_data(self,account_id:int,identify:str) -> dict:
+        """
+        获取当前用户的点赞数据
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        data_ret={'state':1,'messages':[]}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select message_id from trump_space_messages where id=%s and identify='%s'"""%(account_id,identify)
+        cur.execute(get_str)
+        trump_data=cur.fetchall()
+        for row in trump_data:
+            data_ret['messages'].append(row[0])
+        return data_ret
+
+    def get_space_message_collect_data(self,account_id:int,identify:str) -> dict:
+        """
+        获取当前用户在个人空间留言动态的收藏数据
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        data_ret = {'state': 1, 'messages': []}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_str="""select message_id from collect_space_messages where id=%s and identify='%s'"""%(account_id,identify)
+        cur.execute(get_str)
+        collect_data=cur.fetchall()
+        for row in collect_data:
+            data_ret['messages'].append(row[0])
+        return data_ret
+
