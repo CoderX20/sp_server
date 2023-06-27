@@ -225,3 +225,43 @@ def get_my_collect_space_message_data():
     post_res=db_set.get_space_message_collect_data(account_id,identify)
     return make_response(jsonify(post_res))
 
+
+@person_bp.route('/delSpaceMessage',methods=['POST'])
+def del_space_message():
+    """
+    删除个人空间发言
+    :return:
+    """
+    data=request.get_json()
+    message_id=data.get('message_id')
+    post_res=db_set.del_space_message(message_id)
+    return make_response(jsonify(post_res))
+
+
+@person_bp.route('/collectSpaceMessage',methods=['POST'])
+def collect_space_message():
+    """
+    收藏个人空间留言动态
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    message_id = data.get('message_id')
+    post_res=db_set.collect_space_message(account_id,identify,message_id)
+    return make_response(jsonify(post_res))
+
+
+@person_bp.route('/cancelSpaceMessage',methods=['POST'])
+def cancel_collect_space_message():
+    """
+    取消个人空间留言动态收藏
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    message_id = data.get('message_id')
+    post_res=db_set.cancel_collect_space_message(account_id,identify,message_id)
+    return make_response(jsonify(post_res))
+

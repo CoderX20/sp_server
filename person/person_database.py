@@ -328,7 +328,7 @@ class PersonDb(MySQLClient):
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
         update_str="""update space_messages set trump_count = 
-        (select count(message_id) from trump_space_messages where message_id=%s) where message=%s;"""%(message_id,message_id)
+        (select count(message_id) from trump_space_messages where message_id=%s) where id=%s;"""%(message_id,message_id)
         cur.execute(update_str)
 
     def get_my_trump_data(self,account_id:int,identify:str) -> dict:
@@ -364,4 +364,63 @@ class PersonDb(MySQLClient):
         for row in collect_data:
             data_ret['messages'].append(row[0])
         return data_ret
+
+    def del_space_message(self,message_id:int) -> dict:
+        """
+        删除空间留言动态
+        :param message_id:
+        :return:
+        """
+        data_ret={'state':1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        del_str="""delete from space_messages where id=%s;"""%message_id
+        cur.execute(del_str)
+        return data_ret
+
+    def collect_space_message(self,account_id:int,identify:str,message_id:int) -> dict:
+        """
+        收藏空间留言动态
+        :param account_id:
+        :param identify:
+        :param message_id:
+        :return:
+        """
+        data_ret = {'state': 1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        add_str="""insert into collect_space_messages (id, identify, message_id) values (%s,'%s',%s);"""%\
+                (account_id,identify,message_id)
+        cur.execute(add_str)
+        self.update_space_message_collect_count(message_id)
+        return data_ret
+
+    def cancel_collect_space_message(self,account_id:int,identify:str,message_id:int) -> dict:
+        """
+        取消收藏留言动态
+        :param account_id:
+        :param identify:
+        :param message_id:
+        :return:
+        """
+        data_ret = {'state': 1}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        del_str="""delete from collect_space_messages where id=%s and identify='%s' and message_id=%s;"""%\
+                (account_id,identify,message_id)
+        cur.execute(del_str)
+        self.update_space_message_collect_count(message_id)
+        return data_ret
+
+    def update_space_message_collect_count(self,message_id:int):
+        """
+        更新个人空间留言收藏
+        :param message_id:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        update_str="""update space_messages set collect_count=
+        (select count(message_id) from collect_space_messages where message_id=%s) where id=%s"""%(message_id,message_id)
+        cur.execute(update_str)
 
