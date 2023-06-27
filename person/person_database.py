@@ -319,18 +319,6 @@ class PersonDb(MySQLClient):
         self.update_space_message_trump_count(message_id)
         return data_ret
 
-    def update_space_message_trump_count(self,message_id:int) :
-        """
-        更新个人空间留言的点赞数据
-        :param message_id:
-        :return:
-        """
-        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
-        cur = con.cursor()
-        update_str="""update space_messages set trump_count = 
-        (select count(message_id) from trump_space_messages where message_id=%s) where id=%s;"""%(message_id,message_id)
-        cur.execute(update_str)
-
     def get_my_trump_data(self,account_id:int,identify:str) -> dict:
         """
         获取当前用户的点赞数据
@@ -411,16 +399,4 @@ class PersonDb(MySQLClient):
         cur.execute(del_str)
         self.update_space_message_collect_count(message_id)
         return data_ret
-
-    def update_space_message_collect_count(self,message_id:int):
-        """
-        更新个人空间留言收藏
-        :param message_id:
-        :return:
-        """
-        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
-        cur = con.cursor()
-        update_str="""update space_messages set collect_count=
-        (select count(message_id) from collect_space_messages where message_id=%s) where id=%s"""%(message_id,message_id)
-        cur.execute(update_str)
 

@@ -231,3 +231,13 @@ def get_words_cut_attraction_comments():
     post_res=db_set.get_word_cut_attraction_by_id(attraction_id)
     return post_res
 
+
+@attraction_bp.route('/getHeatMapData',methods=['POST'])
+def get_heat_map_data():
+    """
+    获取热力图的数据
+    :return:
+    """
+    post_res=db_set.get_attraction_heat_data()
+    return make_response(jsonify(post_res))
+

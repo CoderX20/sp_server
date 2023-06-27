@@ -5,6 +5,7 @@ import pymysql
 import jieba as jb
 import base64
 import time
+import json
 
 
 class AttractionDB(MySQLClient):
@@ -373,3 +374,26 @@ class AttractionDB(MySQLClient):
         for el in words_new:
             words_count[el]+=1
         return {"state":1,"words":words_count}
+
+    def get_attraction_heat_data(self) -> dict:
+        """
+        获取景点数据的热力图数据
+        :return:
+        """
+        data_ret={'state':1,'heat_data':[]}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        get_route_str="""select route from routes"""
+        cur.execute(get_route_str)
+        route_data=cur.fetchall()
+        node_list=[]
+        for row in route_data:
+            node_list+=json.loads(str(row[0]))['nodes']
+        get_attraction_str = """select id,lat,lng from attractions"""
+        cur.execute(get_attraction_str)
+        attraction_data=cur.fetchall()
+        for item in attraction_data:
+            data_ret['heat_data'].append([item[1], item[2], len([x for x in node_list if x['id'] == item[0]])])
+        return data_ret
+
+

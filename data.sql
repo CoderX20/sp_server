@@ -60,7 +60,7 @@ CREATE TABLE `attraction_comments` (
   `time` varchar(50) DEFAULT NULL,
   `emotion` double DEFAULT NULL COMMENT '情感倾向',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='景区评论表';
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='景区评论表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `attraction_comments` (
 
 LOCK TABLES `attraction_comments` WRITE;
 /*!40000 ALTER TABLE `attraction_comments` DISABLE KEYS */;
-INSERT INTO `attraction_comments` VALUES (1,'很好',1,1,'admin','admin',2,'2023-6-9',1),(5,'非常好玩的',5,1,'admin','admin',1,'2023-6-9',1),(7,'这个确实很好玩，让人惊叹于大自然的奇妙',1,5,'users','Eva',3,'2023-6-10',1),(8,'刚刚回来，很推荐大家去玩',1,1,'users','Json',2,'2023-6-10',1),(9,'客服真的不行呀，走了好久都没有水卖',1,2,'users','Jack',0,'2023-6-10',1),(10,'这个还是很好的，感觉非常的不错，五星好评了',1,9,'users','Lee',2,'2023-6-10',1),(11,'垃圾玩意浪费时间，简直花钱买罪受',1,8,'users','Alice',2,'2023-6-10',0),(12,'部分评论的反应已经和景区管理方交涉了，他们表示将在数日内进行自我整改，对此对所有游客表示抱歉，希望大家玩的开心',1,1,'admin','admin',3,'2023-6-10',1),(13,'好，很好，非常好！！！',1,10,'users','Mark',1,'2023-6-10',0),(14,'这地方是买赞买来的？其实真的很差',1,10,'users','Mark',1,'2023-6-10',0),(15,'欢迎大家来玩',12,1,'admin','admin',0,'2023-6-12',0),(17,'很好玩，下次还来',0,1,'users','Json',2,'2023-6-15',1),(18,'好玩，下次找机会还会来的',1,4,'users','Bob',1,'2023-6-15',1),(19,'说实话，感觉一般般，人工痕迹很多',0,4,'users','Bob',1,'2023-6-15',0),(20,'总体感觉让人还是可以，景区工作人员的服务感觉不太行，要改进',1,2,'users','Jack',3,'2023-6-15',0),(21,'风景是很好的，陪朋友来玩，大家玩的都很开心',0,8,'users','Alice',1,'2023-6-15',1),(22,'第二次来玩，每一次玩的感受都不一样，山里的风景真的很好，给个好评',1,8,'users','Alice',1,'2023-6-15',1),(23,'自然景色很好，感觉真的很不错',0,2,'users','Jack',3,'2023-6-16',0.999352788507922),(24,'九寨沟欢迎大家',0,2,'admin','root',2,'2023-6-16',0.00023909892916232703),(25,'今年新装修十分优秀，希望大家玩的开心',0,1,'admin','admin',2,'2023-6-16',0.923977597592219),(26,'风景是很好，但是游客的素质有待提高',0,1,'users','Json',2,'2023-6-16',0.96423712494013),(27,'景区专车脏，服务人员态度极差，再也不来了',0,9,'users','Lee',2,'2023-6-16',0.03166975589068047),(28,'水卖6元一瓶，你咋不直接抢呢？',0,9,'users','Lee',1,'2023-6-16',0.017277907595635845),(29,'来的时候山上特别冷，景区居然没棉袄卖',0,2,'users','Jack',1,'2023-6-16',0.9290460451986573),(30,'不用多说，玩的就是爽',0,10,'users','Mark',2,'2023-6-16',0.0038669441023752244),(31,'山里面的雾挺好看的，总体感觉很好',2,1,'users','Json',2,'2023-6-18',0.9992212047047513),(32,'汶川很有纪念意义',7,1,'admin','admin',0,'2023-6-19',0.9967836063975617),(33,'太好玩了',0,1,'users','Json',1,'2023-6-19',0.00011148815880957924),(34,'小平同志千古',10,1,'users','Json',1,'2023-6-19',0.8223471945853719),(35,'好玩，下次还来@admin',1,10013,'users','Lily',1,'2023-6-20',0.6873714171936881),(36,'工作人员没好脸色，跟抢劫没区别',0,10013,'users','Lily',1,'2023-6-20',0.0031279698287484214),(37,'感觉一般般，人太多了',159,2,'users','Jack',0,'2023-6-23',0.00006530218935895069),(38,'黄龙好玩的',1,1,'admin','admin',0,'2023-6-26',0.004194213148263891);
+INSERT INTO `attraction_comments` VALUES (1,'很好',1,1,'admin','admin',2,'2023-6-9',1),(5,'非常好玩的',5,1,'admin','admin',1,'2023-6-9',1),(7,'这个确实很好玩，让人惊叹于大自然的奇妙',1,5,'users','Eva',3,'2023-6-10',1),(8,'刚刚回来，很推荐大家去玩',1,1,'users','Json',2,'2023-6-10',1),(9,'客服真的不行呀，走了好久都没有水卖',1,2,'users','Jack',0,'2023-6-10',1),(10,'这个还是很好的，感觉非常的不错，五星好评了',1,9,'users','Lee',2,'2023-6-10',1),(11,'垃圾玩意浪费时间，简直花钱买罪受',1,8,'users','Alice',2,'2023-6-10',0),(12,'部分评论的反应已经和景区管理方交涉了，他们表示将在数日内进行自我整改，对此对所有游客表示抱歉，希望大家玩的开心',1,1,'admin','admin',3,'2023-6-10',1),(13,'好，很好，非常好！！！',1,10,'users','Mark',1,'2023-6-10',0),(14,'这地方是买赞买来的？其实真的很差',1,10,'users','Mark',1,'2023-6-10',0),(15,'欢迎大家来玩',12,1,'admin','admin',1,'2023-6-12',0),(17,'很好玩，下次还来',0,1,'users','Json',2,'2023-6-15',1),(18,'好玩，下次找机会还会来的',1,4,'users','Bob',1,'2023-6-15',1),(19,'说实话，感觉一般般，人工痕迹很多',0,4,'users','Bob',1,'2023-6-15',0),(20,'总体感觉让人还是可以，景区工作人员的服务感觉不太行，要改进',1,2,'users','Jack',3,'2023-6-15',0),(21,'风景是很好的，陪朋友来玩，大家玩的都很开心',0,8,'users','Alice',1,'2023-6-15',1),(22,'第二次来玩，每一次玩的感受都不一样，山里的风景真的很好，给个好评',1,8,'users','Alice',1,'2023-6-15',1),(23,'自然景色很好，感觉真的很不错',0,2,'users','Jack',3,'2023-6-16',0.999352788507922),(24,'九寨沟欢迎大家',0,2,'admin','root',2,'2023-6-16',0.00023909892916232703),(25,'今年新装修十分优秀，希望大家玩的开心',0,1,'admin','admin',2,'2023-6-16',0.923977597592219),(26,'风景是很好，但是游客的素质有待提高',0,1,'users','Json',2,'2023-6-16',0.96423712494013),(27,'景区专车脏，服务人员态度极差，再也不来了',0,9,'users','Lee',2,'2023-6-16',0.03166975589068047),(28,'水卖6元一瓶，你咋不直接抢呢？',0,9,'users','Lee',1,'2023-6-16',0.017277907595635845),(29,'来的时候山上特别冷，景区居然没棉袄卖',0,2,'users','Jack',1,'2023-6-16',0.9290460451986573),(30,'不用多说，玩的就是爽',0,10,'users','Mark',2,'2023-6-16',0.0038669441023752244),(31,'山里面的雾挺好看的，总体感觉很好',2,1,'users','Json',3,'2023-6-18',0.9992212047047513),(32,'汶川很有纪念意义',7,1,'admin','admin',0,'2023-6-19',0.9967836063975617),(33,'太好玩了',0,1,'users','Json',1,'2023-6-19',0.00011148815880957924),(34,'小平同志千古',10,1,'users','Json',1,'2023-6-19',0.8223471945853719),(35,'好玩，下次还来@admin',1,10013,'users','Lily',1,'2023-6-20',0.6873714171936881),(36,'工作人员没好脸色，跟抢劫没区别',0,10013,'users','Lily',1,'2023-6-20',0.0031279698287484214),(37,'感觉一般般，人太多了',159,2,'users','Jack',0,'2023-6-23',0.00006530218935895069),(38,'黄龙好玩的',1,1,'admin','admin',0,'2023-6-26',0.004194213148263891),(39,'不错，就是水有点贵',8,5,'users','Eva',0,'2023-6-27',0.0036193807592335768),(40,'周围交通方便，玩的时候不用担心吃饭的问题，这点，还是很不错的',6,5,'users','Eva',0,'2023-6-27',0.9920296299640794);
 /*!40000 ALTER TABLE `attraction_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +152,7 @@ CREATE TABLE `collect_space_messages` (
 
 LOCK TABLES `collect_space_messages` WRITE;
 /*!40000 ALTER TABLE `collect_space_messages` DISABLE KEYS */;
-INSERT INTO `collect_space_messages` VALUES (1,'users',2);
+INSERT INTO `collect_space_messages` VALUES (1,'users',2),(5,'users',2);
 /*!40000 ALTER TABLE `collect_space_messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +173,7 @@ CREATE TABLE `messages` (
   `name` varchar(45) NOT NULL,
   `emotion` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +182,7 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` VALUES (7,'比较划算的体验','2023-5-31',1,1,NULL,'Json',1),(8,'玩的很不开心，大多数的景点和街边小摊没区别，客服态度极其恶劣','2023-5-31',2,4,NULL,'Bob',0),(9,'关于客服的问题已经反馈出去了，希望各位游客在四川好好的玩，有什么问题可以在这咨询','2023-5-31',4,NULL,1,'admin',1),(12,'感觉升仙了','2023-5-31',3,2,NULL,'Jack',1),(14,'景区宰客乱收费，一根香肠九块五','2023-5-31',1,4,NULL,'Bob',0),(16,'感觉不太行的样子','2023-6-1',2,5,NULL,'Eva',0),(17,'人很多厕所不够用，希望管理方能管管','2023-6-1',5,2,NULL,'Jack',0),(18,'感觉还算比较良心了','2023-6-1',1,6,NULL,'Tom',1),(21,'十分舒适','2023-6-2',3,1,NULL,'Json',1),(22,'不错，很享受','2023-6-3',3,1,NULL,'Json',1),(23,'还是很好的','2023-6-3',2,6,NULL,'Tom',1),(24,'不好玩呀','2023-6-3',1,1,NULL,'Json',0),(25,'四川挺好玩的呀','2023-6-3',2,5,NULL,'Eva',1),(26,'周边的景点很好玩','2023-6-4',2,5,NULL,'Eva',1),(29,'在四川玩的很开心','2023-6-15',2,1,NULL,'Json',1),(30,'好玩呀','2023-6-18',2,1,NULL,'Json',0.0014590117917220786),(31,'不错不错，下次还来','2023-6-20',2,10013,NULL,'Lily',0.9993943421017655),(33,'<a href=\"/?route_id=1\" target=\"_blank\">分享一个好玩的路线</a>>','2023-6-21',2,NULL,1,'admin',0.15764225505405532),(35,'<a href=\"/?route_id=2\" target=\"_blank\">分享路线</a>>','2023-6-21',2,1,NULL,'Json',0.002351572508707568),(36,'<a href=\"/?route_id=4\" target=\"_blank\">分享一个</a>','2023-6-21',2,5,NULL,'Eva',0.001173535667663149),(37,'<a href=\"/?route_id=9\" target=\"_blank\">四川周边山里面还是很好玩的</a>','2023-6-21',0,10012,NULL,'Rose',0.0004004665287542737),(38,'峨眉山可以给大家推荐一下','2023-6-23',4,1,NULL,'Json',0.24974750636990126),(39,'有没有好人可以发一下去川西的路线','2023-6-23',0,2,NULL,'Jack',0.9052707065171433),(43,'大厅里面的一些线路挺好的呀','2023-6-25',2,NULL,1,'admin',0.9972231117165139),(44,'我的空间更新了一些东西，大家可以来看看','2023-6-26',0,NULL,1,'admin',0.0014686001916718965),(45,'大家发言积极一点','2023-6-27',1,NULL,1,'admin',0.000046430382801236355);
+INSERT INTO `messages` VALUES (7,'比较划算的体验','2023-5-31',1,1,NULL,'Json',1),(8,'玩的很不开心，大多数的景点和街边小摊没区别，客服态度极其恶劣','2023-5-31',2,4,NULL,'Bob',0),(9,'关于客服的问题已经反馈出去了，希望各位游客在四川好好的玩，有什么问题可以在这咨询','2023-5-31',4,NULL,1,'admin',1),(12,'感觉升仙了','2023-5-31',3,2,NULL,'Jack',1),(14,'景区宰客乱收费，一根香肠九块五','2023-5-31',1,4,NULL,'Bob',0),(16,'感觉不太行的样子','2023-6-1',2,5,NULL,'Eva',0),(17,'人很多厕所不够用，希望管理方能管管','2023-6-1',5,2,NULL,'Jack',0),(18,'感觉还算比较良心了','2023-6-1',1,6,NULL,'Tom',1),(21,'十分舒适','2023-6-2',3,1,NULL,'Json',1),(22,'不错，很享受','2023-6-3',3,1,NULL,'Json',1),(23,'还是很好的','2023-6-3',2,6,NULL,'Tom',1),(24,'不好玩呀','2023-6-3',1,1,NULL,'Json',0),(25,'四川挺好玩的呀','2023-6-3',2,5,NULL,'Eva',1),(26,'周边的景点很好玩','2023-6-4',2,5,NULL,'Eva',1),(29,'在四川玩的很开心','2023-6-15',2,1,NULL,'Json',1),(30,'好玩呀','2023-6-18',2,1,NULL,'Json',0.0014590117917220786),(31,'不错不错，下次还来','2023-6-20',2,10013,NULL,'Lily',0.9993943421017655),(33,'<a href=\"#/?route_id=1\" target=\"_blank\">分享一个好玩的路线</a>>','2023-6-21',2,NULL,1,'admin',0.15764225505405532),(35,'<a href=\"#/?route_id=2\" target=\"_blank\">分享路线</a>>','2023-6-21',2,1,NULL,'Json',0.002351572508707568),(36,'<a href=\"#/?route_id=4\" target=\"_blank\">分享一个</a>','2023-6-21',2,5,NULL,'Eva',0.001173535667663149),(37,'<a href=\"#/?route_id=9\" target=\"_blank\">四川周边山里面还是很好玩的</a>','2023-6-21',0,10012,NULL,'Rose',0.0004004665287542737),(38,'峨眉山可以给大家推荐一下','2023-6-23',4,1,NULL,'Json',0.24974750636990126),(39,'有没有好人可以发一下去川西的路线','2023-6-23',0,2,NULL,'Jack',0.9052707065171433),(43,'大厅里面的一些线路挺好的呀','2023-6-25',2,NULL,1,'admin',0.9972231117165139),(44,'我的空间更新了一些东西，大家可以来看看','2023-6-26',0,NULL,1,'admin',0.0014686001916718965),(45,'大家发言积极一点','2023-6-27',1,NULL,1,'admin',0.000046430382801236355),(46,'更新一下路线，欢迎订阅我的账号<a href=\"#/?route_id=5\" target=\"_blank\">分享路线</a>','2023-6-27',0,5,NULL,'Eva',0.4321312993559418);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +232,7 @@ CREATE TABLE `space_messages` (
   `trump_count` int DEFAULT '0' COMMENT '点赞数',
   `collect_count` int DEFAULT '0' COMMENT '被收藏数',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='个人空间发表的数据';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='个人空间发表的数据';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +241,7 @@ CREATE TABLE `space_messages` (
 
 LOCK TABLES `space_messages` WRITE;
 /*!40000 ALTER TABLE `space_messages` DISABLE KEYS */;
-INSERT INTO `space_messages` VALUES (2,1,'admin','作品意义：艰苦卓绝的三年新冠疫情抗争接近尾声，2023年随着疫情防控政策逐渐放开，旅游业努力克服多重因素影响，统筹做好疫情防控和恢复发展。四川省有着得天独厚的自然资源、璀璨夺目的文化瑰宝、五彩斑斓的民俗生活，有着“天府之国”美誉的四川省一直以来作为旅游强省吸引八方游客。请同学们根据所学知识，使用提供的四川省旅游资源数据，自选系统开发方向，设计并制作一个旅游资源服务平台。','http://127.0.0.1:5260/static/space/1687783988.4474432_1_0.webp','2023-6-26',2,1),(4,1,'users','我觉得这个路线很不错，从地理位置上来讲，基本可以覆盖四川内的热门景点<a href=\"/?route_id=2\" target=\"_blank\">Json的路线</a>','http://127.0.0.1:5260/static/space/1687853952.9198928_1_0.webp\nhttp://127.0.0.1:5260/static/space/1687853952.9208934_1_1.webp','2023-6-27',1,0);
+INSERT INTO `space_messages` VALUES (2,1,'admin','作品意义：艰苦卓绝的三年新冠疫情抗争接近尾声，2023年随着疫情防控政策逐渐放开，旅游业努力克服多重因素影响，统筹做好疫情防控和恢复发展。四川省有着得天独厚的自然资源、璀璨夺目的文化瑰宝、五彩斑斓的民俗生活，有着“天府之国”美誉的四川省一直以来作为旅游强省吸引八方游客。请同学们根据所学知识，使用提供的四川省旅游资源数据，自选系统开发方向，设计并制作一个旅游资源服务平台。','http://127.0.0.1:5260/static/space/1687783988.4474432_1_0.webp','2023-6-26',3,2),(4,1,'users','我觉得这个路线很不错，从地理位置上来讲，基本可以覆盖四川内的热门景点<a href=\"#/?route_id=2\" target=\"_blank\">Json的路线</a>','http://127.0.0.1:5260/static/space/1687853952.9198928_1_0.webp\nhttp://127.0.0.1:5260/static/space/1687853952.9208934_1_1.webp','2023-6-27',2,0),(5,5,'users','我个人觉得这个路线是很好的，可玩的景点很多<a href=\"#/?route_id=5\" target=\"_blank\">新的路线</a>','http://127.0.0.1:5260/static/space/1687873512.9670992_5_0.webp','2023-6-27',1,0);
 /*!40000 ALTER TABLE `space_messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +295,7 @@ CREATE TABLE `trump_attraction_comments` (
 
 LOCK TABLES `trump_attraction_comments` WRITE;
 /*!40000 ALTER TABLE `trump_attraction_comments` DISABLE KEYS */;
-INSERT INTO `trump_attraction_comments` VALUES (5,'users',5),(5,'users',1),(1,'users',6),(1,'users',1),(9,'users',6),(9,'users',7),(8,'users',10),(8,'users',11),(8,'users',6),(8,'users',8),(10,'users',12),(1,'admin',17),(2,'users',7),(2,'users',20),(8,'users',17),(2,'users',19),(1,'users',23),(9,'users',27),(2,'users',23),(2,'users',28),(2,'users',29),(2,'users',26),(10,'users',30),(10,'users',25),(10,'users',20),(10,'users',18),(10,'users',10),(10,'users',14),(10,'users',13),(1,'users',30),(1,'users',24),(1,'admin',12),(1,'admin',24),(1,'admin',25),(1,'admin',26),(1,'admin',27),(1,'admin',23),(1,'admin',21),(2,'admin',12),(2,'admin',8),(2,'admin',22),(2,'admin',20),(1,'users',31),(1,'admin',31),(1,'users',7),(1,'users',11),(1,'users',34),(10013,'users',35),(10013,'users',36),(10013,'users',33);
+INSERT INTO `trump_attraction_comments` VALUES (5,'users',5),(5,'users',1),(1,'users',6),(1,'users',1),(9,'users',6),(9,'users',7),(8,'users',10),(8,'users',11),(8,'users',6),(8,'users',8),(10,'users',12),(1,'admin',17),(2,'users',7),(2,'users',20),(8,'users',17),(2,'users',19),(1,'users',23),(9,'users',27),(2,'users',23),(2,'users',28),(2,'users',29),(2,'users',26),(10,'users',30),(10,'users',25),(10,'users',20),(10,'users',18),(10,'users',10),(10,'users',14),(10,'users',13),(1,'users',30),(1,'users',24),(1,'admin',12),(1,'admin',24),(1,'admin',25),(1,'admin',26),(1,'admin',27),(1,'admin',23),(1,'admin',21),(2,'admin',12),(2,'admin',8),(2,'admin',22),(2,'admin',20),(1,'users',31),(1,'admin',31),(1,'users',7),(1,'users',11),(1,'users',34),(10013,'users',35),(10013,'users',36),(10013,'users',33),(5,'users',15),(5,'users',31);
 /*!40000 ALTER TABLE `trump_attraction_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,7 +343,7 @@ CREATE TABLE `trump_space_messages` (
 
 LOCK TABLES `trump_space_messages` WRITE;
 /*!40000 ALTER TABLE `trump_space_messages` DISABLE KEYS */;
-INSERT INTO `trump_space_messages` VALUES (1,'admin',2),(1,'admin',1),(1,'users',2),(1,'users',4);
+INSERT INTO `trump_space_messages` VALUES (1,'admin',2),(1,'admin',1),(1,'users',2),(1,'users',4),(5,'users',2),(5,'users',4),(5,'users',5);
 /*!40000 ALTER TABLE `trump_space_messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,4 +383,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-27 16:37:09
+-- Dump completed on 2023-06-27 21:52:22
