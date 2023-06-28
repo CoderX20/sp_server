@@ -32,3 +32,69 @@ def get_agency_search():
     post_res=db_set.get_agency_by_city(city,keyword,start,end)
     return make_response(jsonify(post_res))
 
+
+@agency_bp.route('/getAgencyID',methods=['POST'])
+def get_agency_id():
+    """
+    根据id获取旅行社数据
+    :return:
+    """
+    data=request.get_json()
+    agency_id=data.get('agency_id')
+    post_res=db_set.get_agency_by_id(agency_id)
+    return make_response(jsonify(post_res))
+
+
+@agency_bp.route('/getMyAgencyScore',methods=['POST'])
+def get_my_agency_score():
+    """
+    获取当前用户的旅行社评分
+    :return:
+    """
+    data=request.get_json()
+    account_id=data.get('account_id')
+    identify=data.get('identify')
+    agency_id=data.get('agency_id')
+    post_res=db_set.get_my_agency_score(account_id,identify,agency_id)
+    return make_response(jsonify(post_res))
+
+
+@agency_bp.route('/addAgencyScore',methods=['POST'])
+def add_agency_score():
+    """
+    添加旅行社评分
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    agency_id = data.get('agency_id')
+    score=data.get('score')
+    post_res=db_set.add_agency_score(account_id,identify,agency_id,score)
+    return make_response(jsonify(post_res))
+
+
+@agency_bp.route('/alterAgencyScore',methods=['POST'])
+def alter_agency_score():
+    """
+    修改旅行社评分数据
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    agency_id = data.get('agency_id')
+    score = data.get('score')
+    post_res=db_set.alter_agency_score(account_id,identify,agency_id,score)
+    return make_response(jsonify(post_res))
+
+
+@agency_bp.route('/getAgencyAttractions',methods=['POST'])
+def get_agency_attractions():
+    """
+    获取旅行社所代理的景点
+    :return:
+    """
+    post_res=db_set.get_agency_attractions()
+    return make_response(jsonify(post_res))
+
