@@ -4,6 +4,7 @@ import pymysql
 from dbIO import MySQLClient
 import time
 import random
+import json
 
 
 class AgencyDB(MySQLClient):
@@ -151,30 +152,73 @@ class AgencyDB(MySQLClient):
                    (agency_id,agency_id)
         cur.execute(update_str)
 
-    def get_agency_attractions(self) -> dict:
+    def get_agency_attractions(self,agency_id:int) -> dict:
         """
-        根据旅行社查找当地的景点
-        :param address:
+        根据旅行社查找所支持的旅游线路
+        :param agency_id:
         :return:
         """
-        data_ret={'state':1,'attraction_list':[]}
+        data_ret={'state':1,'route_list':''}
         con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
         cur = con.cursor()
-        attraction_count=random.randint(10,30)
-        get_str="""select id,name,address,level,img,lat,lng from attractions order by rand() limit %s"""%attraction_count
-        cur.execute(get_str)
-        attraction_data=cur.fetchall()
-        for row in attraction_data:
-            data_ret['attraction_list'].append({
-                'id':row[0],
-                'name':row[1],
-                'address':row[2],
-                'level':row[3],
-                'img':row[4],
-                'lat':row[5],
-                'lng':row[6],
-                'price':random.randint(50,2000)
+        get_str="""select id,routes from travel_agency where id=%s"""
+        cur.execute(get_str, agency_id)
+        route_data=cur.fetchall()
+        if len(route_data)>0:
+            data_ret['route_list']=eval(route_data[0][1])
+        return data_ret
+
+    def set_agency_attractions(self) -> dict:
+        """
+        设置旅行社代理的路线
+        :return:
+        """
+        data_ret={'route_list':[]}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        cur.execute("""select id from travel_agency""")
+        agency_id_list=cur.fetchall()
+        cur.execute("""select id,name,address,level,img,lat,lng from attractions""")
+        attraction_list=cur.fetchall()
+        attraction_obj=[]
+        for row in attraction_list:
+            attraction_obj.append({
+                "id": row[0],
+                "name": row[1],
+                "address": row[2],
+                "level": row[3],
+                "img": row[4],
+                "lat": row[5],
+                "lng": row[6],
             })
+        for item_id in agency_id_list:
+            routes_data={"routes":[]}
+            routes_count=random.randint(2,10)
+            for i in range(routes_count):
+                routes_data["routes"].append({
+                    "nodes":random.sample(attraction_obj,random.randint(2,9)),
+                    "price":random.randint(200,5000)
+                })
+            data_ret['route_list'].append(routes_data)
+            cur.execute("""update travel_agency set routes=%s where id=%s""",(str(routes_data),item_id))
+        return data_ret
+
+    def add_new_order(self,account_id:int, identify:str, route:str, agency_id:int, price:float, add_time:str) -> dict:
+        """
+        添加订单
+        :param account_id:
+        :param identify:
+        :param route:
+        :param agency_id:
+        :param price:
+        :param add_time:
+        :return:
+        """
+        data_ret = {'state': 1,}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        cur.execute("""insert into route_order (account_id, identify, route, agency_id, price, time) values (%s,%s,%s,%s,%s,%s);""",
+                    (account_id,identify,route,agency_id,price,add_time,))
         return data_ret
 
 

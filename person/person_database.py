@@ -283,7 +283,8 @@ class PersonDb(MySQLClient):
                 'img':row[4],
                 'trump_count':row[5],
                 'collect_count':row[6],
-                'time':row[7]
+                'time':row[7],
+                'name': self.get_name_id(row[1], row[2]),
             })
         return data_ret
 
@@ -399,4 +400,47 @@ class PersonDb(MySQLClient):
         cur.execute(del_str)
         self.update_space_message_collect_count(message_id)
         return data_ret
+
+    def get_my_collect_messages(self,account_id:int,identify:str) -> dict:
+        """
+        获取我的个人空间留言收藏
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        data_ret={'state':1,'collect_list':[]}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        cur.execute("""select id,account_id,identify,message,img,trump_count,collect_count,time from space_messages where id in 
+        (select message_id from collect_space_messages where id=%s and identify=%s)"""
+                    ,(account_id,identify,))
+        message_list=cur.fetchall()
+        for row in message_list:
+            data_ret['collect_list'].append({
+                'id': row[0],
+                'account_id': row[1],
+                'identify': row[2],
+                'message': row[3],
+                'img': row[4],
+                'trump_count': row[5],
+                'collect_count': row[6],
+                'time': row[7],
+                'name': self.get_name_id(row[1],row[2]),
+            })
+        return data_ret
+
+    def get_name_id(self,account_id:int,identify:str) -> str:
+        """
+        获取用户姓名
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        cur.execute("""select name from %s where id=%s"""%(identify,account_id))
+        name_list=cur.fetchall()
+        if len(name_list)>0:
+            return name_list[0][0]
+
 

@@ -95,6 +95,34 @@ def get_agency_attractions():
     获取旅行社所代理的景点
     :return:
     """
-    post_res=db_set.get_agency_attractions()
+    data=request.get_json()
+    agency_id=data.get("agency_id")
+    post_res=db_set.get_agency_attractions(agency_id)
+    return make_response(jsonify(post_res))
+
+
+@agency_bp.route('/setAgencyRoutes',methods=['GET'])
+def set_agency_routes():
+    """
+    设置旅行社路线
+    :return:
+    """
+    return db_set.set_agency_attractions()
+
+
+@agency_bp.route('/addNewOrder',methods=['POST'])
+def add_new_order():
+    """
+    添加新的订单
+    :return:
+    """
+    data=request.get_json()
+    account_id=data.get('account_id')
+    identify=data.get('identify')
+    route=data.get('route')
+    agency_id=data.get('agency_id')
+    price=data.get('price')
+    add_time=data.get('add_time')
+    post_res=db_set.add_new_order(account_id,identify,route,agency_id,price,add_time)
     return make_response(jsonify(post_res))
 

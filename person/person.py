@@ -265,3 +265,16 @@ def cancel_collect_space_message():
     post_res=db_set.cancel_collect_space_message(account_id,identify,message_id)
     return make_response(jsonify(post_res))
 
+
+@person_bp.route('/getMyCollectMessages',methods=['POST'])
+def get_my_collect_messages():
+    """
+    获取我所有收藏的个人空间留言动态
+    :return:
+    """
+    data = request.get_json()
+    account_id = data.get('account_id')
+    identify = data.get('identify')
+    post_res=db_set.get_my_collect_messages(account_id,identify)
+    return post_res
+
