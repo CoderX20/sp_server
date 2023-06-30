@@ -393,7 +393,9 @@ class AttractionDB(MySQLClient):
         cur.execute(get_attraction_str)
         attraction_data=cur.fetchall()
         for item in attraction_data:
-            data_ret['heat_data'].append([item[1], item[2], len([x for x in node_list if x['id'] == item[0]])])
+            cur.execute("""select id from attraction_comments where attraction_id=%s""",item[0])
+            comments_data=cur.fetchall()
+            data_ret['heat_data'].append([item[1], item[2], len([x for x in node_list if x['id'] == item[0]])*0.5 + len(comments_data)*0.5])
         return data_ret
 
 

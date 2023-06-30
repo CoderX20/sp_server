@@ -1,4 +1,5 @@
 # coding:utf-8
+import json
 
 import pymysql
 from dbIO import MySQLClient
@@ -442,5 +443,34 @@ class PersonDb(MySQLClient):
         name_list=cur.fetchall()
         if len(name_list)>0:
             return name_list[0][0]
+
+    def get_my_orders(self,account_id:int,identify:str)-> dict:
+        """
+        获取我的订单数据
+        :param account_id:
+        :param identify:
+        :return:
+        """
+        data_ret={'state':1,'order_list':[]}
+        con = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, database=self.DBName, autocommit=True)
+        cur = con.cursor()
+        cur.execute("""select route_order.id,account_id,identify,route,price,agency_id,ta.agency_name,ta.phone,time 
+        from route_order 
+        join travel_agency ta on route_order.agency_id = ta.id 
+        where account_id=%s and identify=%s""",(account_id,identify))
+        order_data=cur.fetchall()
+        for row in order_data:
+            data_ret['order_list'].append({
+                'id':row[0],
+                'account_id':row[1],
+                'identify':row[2],
+                'route':json.loads(row[3]),
+                'price':row[4],
+                'agency_id':row[5],
+                'agency_name':row[6],
+                'agency_phone':row[7],
+                'time':row[8]
+            })
+        return data_ret
 
 
