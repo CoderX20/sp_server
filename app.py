@@ -31,6 +31,7 @@ def login():
     username = request.cookies.get('username')
     password = request.cookies.get('password')
     identify = request.cookies.get('identify')
+    # print(type(username),username)
     post_res=make_response()
     post_res.set_cookie("userid","",max_age=cookie_time)
     post_res.set_cookie("username",str(username),max_age=cookie_time)
@@ -38,13 +39,13 @@ def login():
     post_res.set_cookie("identify",str(identify),max_age=cookie_time)
     # 首先用cookie验证是否有登陆信息
     # cookie无登陆信息
-    if username is None or password is None or identify is None:
+    if username is None or password is None or identify is None or username=="None" or password =="None" or identify =="None":
         #        使用API接口参数
         data=request.get_json()
         username=data.get('username')
         password=data.get('password')
         identify=data.get('identify')
-        if username is not None or password is not None or identify is not None:
+        if username is not None or password is not None or identify is not None and username !="None" or password !="None" or identify !="None":
             check_res=db_set.login_check(username,password,identify)
             post_res=make_response(jsonify(check_res))
             if check_res['state']==1:
@@ -52,6 +53,7 @@ def login():
                 post_res.set_cookie('userid',str(check_res['user']['id']),max_age=cookie_time)
     else:
         # cookie有登录信息
+        # print(username is None)
         check_res=db_set.login_check(username,password,identify)
         post_res=make_response(jsonify(check_res))
         if check_res['state']==1:
